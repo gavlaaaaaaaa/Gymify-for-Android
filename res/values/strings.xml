@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Gymify</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_exercise">ExerciseActivity</string>
+    <string name="title_activity_set">SetActivity</string>
+    <string name="title_exercise_list">Exercises</string>
+    <string name="title_exercise_detail">Exercise Detail</string>
+    <string name="title_activity_report">ReportActivity</string>
+
+</resources>

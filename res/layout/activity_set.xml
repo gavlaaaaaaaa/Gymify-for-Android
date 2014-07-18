@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gav.gymify.SetActivity"
+    tools:ignore="MergeRootFrame"
+    android:padding="10dp"
+    android:background="#003366" 
+    android:orientation="vertical">
+    
+    <ListView
+        android:id="@+id/set_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#006699"
+        android:divider="#003366"
+        android:dividerHeight="10dp"
+		/>
+   
+</LinearLayout>
+
