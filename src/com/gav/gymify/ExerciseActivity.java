@@ -133,9 +133,9 @@ public class ExerciseActivity extends Activity {
 
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
+			public void onItemClick(AdapterView<?> pView, View view, int pos,
 					long arg3) {
-				selected = exercises.get(pos);
+				selected = findExerciseByName(nameBox.getText().toString());
 			}
 			
 		});
@@ -302,6 +302,10 @@ public class ExerciseActivity extends Activity {
 	            }
 	        }
 	    }
+	}
+	
+	public Exercise findExerciseByName(String name){
+		
 	}
 	
 	@Override

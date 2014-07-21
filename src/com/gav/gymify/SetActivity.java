@@ -205,8 +205,11 @@ public class SetActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 	    super.onBackPressed();
-	    alertDialog.dismiss();
-	    cdt.cancel();
+	    if(alertDialog != null && cdt != null){
+	    	alertDialog.dismiss();
+	    	cdt.cancel();
+	    }
+	    
 	    overridePendingTransition(R.anim.slide_in_left, android.R.anim.fade_out);   
 	}
 }
