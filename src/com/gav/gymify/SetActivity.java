@@ -10,6 +10,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.NotificationCompat;
@@ -37,6 +38,7 @@ public class SetActivity extends Activity {
 	AlertDialog alertDialog;
 	CountDownTimer cdt;
 	private int next_pos;
+	MediaPlayer mp;
 	
 	
 	@Override
@@ -48,6 +50,7 @@ public class SetActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		mp = MediaPlayer.create(this, R.raw.finished);
 		exercise_id = getIntent().getIntExtra("exercise_id", 0);
 		next_pos = getIntent().getIntExtra("next_pos", 0);
 		db = new DatabaseHelper(getApplicationContext());
@@ -181,12 +184,11 @@ public class SetActivity extends Activity {
 		    public void onFinish() {
 		    	alertDialog.dismiss();
 		    	mBuilder.setVibrate(new long[] { 3000 });
-	    		mBuilder.setDefaults(Notification.DEFAULT_SOUND);
 	    		NotificationManager mNotifyMgr = 
 	    		        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
 	    		mNotifyMgr.notify(001, mBuilder.build());
-	    		
+	    		mp.start();
 		    	if(curr_set_no == max_set_no){
 		    		end();
 		    	}
