@@ -135,7 +135,12 @@ public class ExerciseActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> pView, View view, int pos,
 					long arg3) {
-				selected = findExerciseByName(nameBox.getText().toString());
+				selected = (Exercise)pView.getAdapter().getItem(pos);
+				mgroupSpinner.setSelection(((ArrayAdapter<String>)mgroupSpinner.getAdapter()).getPosition(Exercise.mgroups[selected.getMgroup().getMask()]));
+				setNoBox.setText(String.valueOf(selected.getNoSets()));
+				if(!selected.getDescription().isEmpty()){
+					descBox.setText(selected.getDescription());
+				}
 			}
 			
 		});
@@ -304,9 +309,11 @@ public class ExerciseActivity extends Activity {
 	    }
 	}
 	
-	public Exercise findExerciseByName(String name){
+	/*public Exercise findExerciseByName(String name){
+		Exercise e = null;
 		
-	}
+		for(Exercise)
+	}*/
 	
 	@Override
 	public void onBackPressed() {
