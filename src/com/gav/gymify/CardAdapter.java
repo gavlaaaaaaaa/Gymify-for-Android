@@ -97,9 +97,15 @@ public class CardAdapter extends ArrayAdapter<Set>{
 				}
 			});
 
-    		if(previous.size() >= position+1){
-            	holder.weight.setText(String.valueOf(previous.get(position).getWeight()));
-            	holder.reps.setText(String.valueOf(previous.get(position).getNoReps()));
+    		if(previous.size() > position && (max_set_no - position) > 0){
+    			if(previous.size() > max_set_no){
+    				holder.weight.setText(String.valueOf(previous.get(previous.size()-(max_set_no-position)).getWeight()));
+    				holder.reps.setText(String.valueOf(previous.get(previous.size()-(max_set_no-position)).getNoReps()));
+    			}
+    			else{
+    				holder.weight.setText(String.valueOf(previous.get(position).getWeight()));
+    				holder.reps.setText(String.valueOf(previous.get(position).getNoReps()));
+    			}
             }
             else{
             	holder.weight.setHint("0");

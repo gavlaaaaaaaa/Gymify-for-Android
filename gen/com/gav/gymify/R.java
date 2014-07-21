@@ -988,8 +988,8 @@ containing a value of this type.
         public static final int list_item_selector=0x7f020059;
     }
     public static final class id {
-        public static final int action_add_day=0x7f06005d;
-        public static final int action_add_exercise=0x7f06005c;
+        public static final int action_add_day=0x7f06005e;
+        public static final int action_add_exercise=0x7f06005d;
         public static final int action_bar=0x7f06001c;
         public static final int action_bar_activity_content=0x7f060015;
         public static final int action_bar_container=0x7f06001b;
@@ -998,12 +998,12 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f060023;
         public static final int action_bar_title=0x7f060022;
         public static final int action_context_bar=0x7f06001d;
-        public static final int action_delete=0x7f06005a;
+        public static final int action_delete=0x7f06005b;
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060024;
-        public static final int action_report=0x7f06005e;
-        public static final int action_settings=0x7f06005b;
+        public static final int action_report=0x7f06005f;
+        public static final int action_settings=0x7f06005c;
         public static final int activity_chooser_view_content=0x7f060025;
         public static final int always=0x7f06000b;
         public static final int beginning=0x7f060011;
@@ -1046,6 +1046,7 @@ containing a value of this type.
         public static final int mgroup_spinner=0x7f06004a;
         public static final int middle=0x7f060012;
         public static final int never=0x7f060009;
+        public static final int next_exercise=0x7f06005a;
         public static final int none=0x7f060010;
         public static final int normal=0x7f060000;
         public static final int progress_circular=0x7f060018;
@@ -1165,7 +1166,8 @@ containing a value of this type.
         public static final int fragment_main=0x7f030025;
         public static final int fragment_report=0x7f030026;
         public static final int fragment_set=0x7f030027;
-        public static final int support_simple_spinner_dropdown_item=0x7f030028;
+        public static final int next_exercise_alert=0x7f030028;
+        public static final int support_simple_spinner_dropdown_item=0x7f030029;
     }
     public static final class menu {
         public static final int delete_menu=0x7f0d0000;

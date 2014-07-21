@@ -231,8 +231,8 @@ int drawable abc_textfield_searchview_right_holo_light 0x7f020056
 int drawable ic_action_accept 0x7f020057
 int drawable ic_launcher 0x7f020058
 int drawable list_item_selector 0x7f020059
-int id action_add_day 0x7f06005d
-int id action_add_exercise 0x7f06005c
+int id action_add_day 0x7f06005e
+int id action_add_exercise 0x7f06005d
 int id action_bar 0x7f06001c
 int id action_bar_activity_content 0x7f060015
 int id action_bar_container 0x7f06001b
@@ -241,12 +241,12 @@ int id action_bar_root 0x7f06001a
 int id action_bar_subtitle 0x7f060023
 int id action_bar_title 0x7f060022
 int id action_context_bar 0x7f06001d
-int id action_delete 0x7f06005a
+int id action_delete 0x7f06005b
 int id action_menu_divider 0x7f060016
 int id action_menu_presenter 0x7f060017
 int id action_mode_close_button 0x7f060024
-int id action_report 0x7f06005e
-int id action_settings 0x7f06005b
+int id action_report 0x7f06005f
+int id action_settings 0x7f06005c
 int id activity_chooser_view_content 0x7f060025
 int id always 0x7f06000b
 int id beginning 0x7f060011
@@ -289,6 +289,7 @@ int id mgroup 0x7f060058
 int id mgroup_spinner 0x7f06004a
 int id middle 0x7f060012
 int id never 0x7f060009
+int id next_exercise 0x7f06005a
 int id none 0x7f060010
 int id normal 0x7f060000
 int id progress_circular 0x7f060018
@@ -367,7 +368,8 @@ int layout fragment_exercise_detail 0x7f030024
 int layout fragment_main 0x7f030025
 int layout fragment_report 0x7f030026
 int layout fragment_set 0x7f030027
-int layout support_simple_spinner_dropdown_item 0x7f030028
+int layout next_exercise_alert 0x7f030028
+int layout support_simple_spinner_dropdown_item 0x7f030029
 int menu delete_menu 0x7f0d0000
 int menu exercise 0x7f0d0001
 int menu main 0x7f0d0002

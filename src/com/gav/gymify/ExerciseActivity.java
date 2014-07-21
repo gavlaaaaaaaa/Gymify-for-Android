@@ -35,6 +35,7 @@ public class ExerciseActivity extends Activity {
 	private ListView listView;
 	private ExerciseListViewAdapter adapter;
 	private int day_id;
+	private Exercise next_exercise = null;
 	private int next_pos = 0;
 	private Exercise selected = null;
 	
@@ -199,7 +200,6 @@ public class ExerciseActivity extends Activity {
 			
 			@Override
 			public boolean onPrepareActionMode(ActionMode arg0, Menu arg1) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 			
@@ -260,12 +260,13 @@ public class ExerciseActivity extends Activity {
 				Intent exerciseIntent = new Intent(ExerciseActivity.this, SetActivity.class);
 				exerciseIntent.putExtra("exercise_id", e.getId());
 				if(position+1 < adapter.getCount() ){
-					next_pos = position+1;
+					next_exercise = (Exercise)listView.getItemAtPosition(position+1);
+					next_pos = position +1;
 				}
 				else{
-					next_pos = 0;
+					next_exercise = null;
 				}
-				exerciseIntent.putExtra("next_pos", next_pos);
+				exerciseIntent.putExtra("next_exercise_id", next_exercise.getId());
 				startActivityForResult(exerciseIntent, 1);
 				overridePendingTransition(R.anim.slide_out_right, android.R.anim.fade_out);
 			}
@@ -277,7 +278,7 @@ public class ExerciseActivity extends Activity {
 
 	    if (requestCode == 1) {
 	        if(resultCode == RESULT_OK){
-	            if(next_pos > 0){
+	            if(next_exercise != null){
 	            	listView.performItemClick(listView.getAdapter().getView(next_pos, null, null), next_pos, listView.getAdapter().getItemId(next_pos));
 	            }
 	            else{
@@ -309,11 +310,6 @@ public class ExerciseActivity extends Activity {
 	    }
 	}
 	
-	/*public Exercise findExerciseByName(String name){
-		Exercise e = null;
-		
-		for(Exercise)
-	}*/
 	
 	@Override
 	public void onBackPressed() {

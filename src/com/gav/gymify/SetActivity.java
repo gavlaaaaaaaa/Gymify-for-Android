@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.gav.sqlhelper.DatabaseHelper;
 import com.gav.sqlmodel.Exercise;
@@ -37,7 +37,7 @@ public class SetActivity extends Activity {
 		    new NotificationCompat.Builder(this);
 	AlertDialog alertDialog;
 	CountDownTimer cdt;
-	private int next_pos;
+	private Exercise next_exercise;
 	MediaPlayer mp;
 	
 	
@@ -51,9 +51,10 @@ public class SetActivity extends Activity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		mp = MediaPlayer.create(this, R.raw.finished);
-		exercise_id = getIntent().getIntExtra("exercise_id", 0);
-		next_pos = getIntent().getIntExtra("next_pos", 0);
+		
 		db = new DatabaseHelper(getApplicationContext());
+		exercise_id = getIntent().getIntExtra("exercise_id", 0);
+		next_exercise = db.getExercise(getIntent().getIntExtra("next_exercise_id", -1));
 		currExercise = db.getExercise(exercise_id);
 		ArrayList<Set> sets = (ArrayList<Set>) db.getSetsByExercise(exercise_id);
 		
@@ -134,18 +135,23 @@ public class SetActivity extends Activity {
 	
 	public void startTimer(final int curr_set_no, final int max_set_no){
 		this.closeKeyboard();
-		
+		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+		View layout = inflater.inflate(R.layout.next_exercise_alert, (ViewGroup) findViewById(R.id.layout_root));
+		TextView tv = (TextView) layout.findViewById(R.id.next_exercise);
+		ArrayList<Set>sets = (ArrayList<Set>)db.getSetsByExercise(next_exercise.getId());
 		alertDialog = new AlertDialog.Builder(this).create();
-		
+		alertDialog.setView(layout);
 		alertDialog.setMessage("01:00");
 		
-		 // defaults to false
 		if(curr_set_no >= max_set_no){
-			if(next_pos == 0){
+			if(next_exercise == null){
 				end();
 			}
 			else{
-				alertDialog.setTitle("Next Exercise in...");
+				alertDialog.setTitle("Next Exercise " + next_exercise.getName() + " in...");
+				tv.setText("Last Logs:\nSet 1: "+sets.get(sets.size()-3).getWeight()+"kg	- " + sets.get(sets.size()-3).getNoReps() + " reps\n"
+						+ "Set 2: "+sets.get(sets.size()-2).getWeight()+"kg	- " + sets.get(sets.size()-2).getNoReps() + " reps\n"
+						+ "Set 3: "+sets.get(sets.size()-1).getWeight()+"kg	- " + sets.get(sets.size()-1).getNoReps() + " reps\n");
 				alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Do One More Set" , new DialogInterface.OnClickListener() {
 					
 					@Override
