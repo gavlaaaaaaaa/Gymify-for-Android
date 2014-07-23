@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -32,24 +31,24 @@ public class MainActivity extends ActionBarActivity {
 	
 	private DatabaseHelper db;
 	private ListView listView;
-	private ListViewAdapter adapter;
-	public static final String[] weekdays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+	private DayListViewAdapter adapter;
 	
+	//initialise database and the list view - retrieve the list items from the database
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		
+		overridePendingTransition(R.anim.slide_in_left, android.R.anim.fade_out);
 		db = new DatabaseHelper(getApplicationContext());
 
 		ArrayList<Day> days = (ArrayList<Day>) db.getAllDays();
 		
-		adapter = new ListViewAdapter(this, R.layout.day_list_item_layout, days);
+		adapter = new DayListViewAdapter(this, R.layout.day_list_item_layout, days);
 		
 		initListView(adapter);
 		
@@ -106,13 +105,15 @@ public class MainActivity extends ActionBarActivity {
 	}
 	
 	public void displayAddDayDialog(){
+		//layout inflater and View for the Add day Dialog
 		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 		View layout = inflater.inflate(R.layout.add_day_dialog, (ViewGroup) findViewById(R.id.layout_root));
 		
 		final EditText nameBox = (EditText) layout.findViewById(R.id.day_name_edit);
 		final Spinner weekdaySpinner = (Spinner) layout.findViewById(R.id.weekday_spinner);
+		//spinner adapter for the days of the week
 		ArrayAdapter<String>spinnerAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, weekdays);
+                android.R.layout.simple_spinner_item, Day.weekdays);
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		weekdaySpinner.setAdapter(spinnerAdapter);
 		
@@ -125,6 +126,7 @@ public class MainActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				//ensure at least a name is given in order to create a day
 				if(!nameBox.getText().toString().isEmpty()){
 					Day d = new Day(nameBox.getText().toString(), WeekDay.values()[weekdaySpinner.getSelectedItemPosition()]);
 					int id = (int)db.createDay(d, new long[]{});
@@ -147,48 +149,32 @@ public class MainActivity extends ActionBarActivity {
 		});
 		
 		AlertDialog dialog = builder.create();
+		//prevent touching outside from dismissing the box - forces the use of the cancel button
 		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
 	}
 	
 	
-	public void initListView(final ListViewAdapter adapter){
+	public void initListView(final DayListViewAdapter adapter){
+		//initialise the list view and its adapter. Add functions to deal with multiple selects and deletes
 		listView = (ListView) findViewById(R.id.main_list);
 		listView.setAdapter(adapter);
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-		listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
+		listView.setMultiChoiceModeListener(new MultiSelectListener(adapter, listView){
 			
-			@Override
-			public boolean onPrepareActionMode(ActionMode arg0, Menu arg1) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public void onDestroyActionMode(ActionMode mode) {
-				adapter.removeSelection();
-			}
-			
-			@Override
-			public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-				mode.getMenuInflater().inflate(R.menu.delete_menu, menu);
-				return true;
-			}
-			
+			//all the default functionality of MultiChoiceModeListener is implemented in MultiSelectListener - only the onActionItemClicked must be implemented
 			@Override
 			public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 				
 				switch (item.getItemId()) {
                 case R.id.action_delete:
                     // Calls getSelectedIds method from ListViewAdapter Class
-                    SparseBooleanArray selected = adapter
-                            .getSelectedIds();
+                    SparseBooleanArray selected = adapter.getSelectedIds();
                     // Captures all selected ids with a loop
                     for (int i = (selected.size() - 1); i >= 0; i--) {
                         if (selected.valueAt(i)) {
-                            Day selectedDay = (Day) adapter
-                                    .getItem(selected.keyAt(i));
-                            // Remove selected items following the ids
+                            Day selectedDay = (Day) adapter.getItem(selected.keyAt(i));
+                            // Remove selected days from the database using its id
                             db.deleteDay(selectedDay.getId());
                             adapter.remove(selectedDay);
                         }
@@ -201,15 +187,8 @@ public class MainActivity extends ActionBarActivity {
                 }
 			}
 			
-			@Override
-			public void onItemCheckedStateChanged(ActionMode mode, int position,
-					long id, boolean checked) {
-			 
-				final int checkedCount = listView.getCheckedItemCount();
-				mode.setTitle(checkedCount + " Items Selected");
-				adapter.toggleSelection(position);
-			}
 		});
+		//open the exercise list for the day on click
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -224,4 +203,5 @@ public class MainActivity extends ActionBarActivity {
 			
 		});
 	}
+	
 }

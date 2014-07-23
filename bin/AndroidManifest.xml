@@ -35,19 +35,7 @@
             android:parentActivityName="com.gav.gymify.ExerciseActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name="com.gav.gymify.ExerciseListActivity"
-            android:label="@string/title_exercise_list"
-            android:parentActivityName="com.gav.gymify.MainActivity" >
-        </activity>
-        <activity
-            android:name="com.gav.gymify.ExerciseDetailActivity"
-            android:label="@string/title_exercise_detail"
-            android:parentActivityName="com.gav.gymify.ExerciseListActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gav.gymify.ExerciseListActivity" />
-        </activity>
+       
         <activity
             android:name="com.gav.gymify.ReportActivity"
             android:label="@string/title_activity_report" >

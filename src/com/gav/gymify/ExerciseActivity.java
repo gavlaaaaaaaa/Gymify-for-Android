@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -39,6 +38,7 @@ public class ExerciseActivity extends Activity {
 	private int next_pos = 0;
 	private Exercise selected = null;
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,7 +59,7 @@ public class ExerciseActivity extends Activity {
 		
 		adapter = new ExerciseListViewAdapter(this, R.layout.ex_list_item_layout, exercises);
 		
-		initListView(adapter);
+		initListView();
 		
 		db.closeDB();
 		
@@ -87,6 +87,10 @@ public class ExerciseActivity extends Activity {
 			return true;
 		case R.id.action_delete:
 			return true;		
+		case R.id.home:
+			//when using action bar back button - simulate onBackPressed() for animations
+			onBackPressed();
+			return true;
 		}
 		
 		return super.onOptionsItemSelected(item);
@@ -114,7 +118,7 @@ public class ExerciseActivity extends Activity {
 		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 		View layout = inflater.inflate(R.layout.add_exercise_dialog, (ViewGroup) findViewById(R.id.layout_root));
 		
-		//initialise dialog items
+		//Initialize dialog items
 		final AutoCompleteTextView nameBox = (AutoCompleteTextView) layout.findViewById(R.id.ex_name_edit);
 		final EditText descBox = (EditText) layout.findViewById(R.id.desc_edit);
 		final EditText setNoBox = (EditText) layout.findViewById(R.id.set_no_edit);
@@ -125,7 +129,7 @@ public class ExerciseActivity extends Activity {
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mgroupSpinner.setAdapter(spinnerAdapter);
 		
-		//initialise exercise array for autocomplete
+		//Initialize exercise array for auto complete
 		final ArrayList<Exercise> exercises = (ArrayList<Exercise>)db.getAllExercises();
 		ArrayAdapter<Exercise> nameAdapter = new ArrayAdapter<Exercise>(this, android.R.layout.simple_list_item_1, exercises);
 		nameBox.setAdapter(nameAdapter);
@@ -136,6 +140,7 @@ public class ExerciseActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> pView, View view, int pos,
 					long arg3) {
+				//get the selected exercise from the autocomplete box and fill in the form details based on the exercises current details
 				selected = (Exercise)pView.getAdapter().getItem(pos);
 				mgroupSpinner.setSelection(((ArrayAdapter<String>)mgroupSpinner.getAdapter()).getPosition(Exercise.mgroups[selected.getMgroup().getMask()]));
 				setNoBox.setText(String.valueOf(selected.getNoSets()));
@@ -156,7 +161,7 @@ public class ExerciseActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if(!nameBox.getText().toString().isEmpty()){
-					
+					//check if the exercise is a premade one (has been selected using the autocomplete feature OR whether it must be created from scratch
 					if(selected == null){
 						selected = new Exercise(nameBox.getText().toString(), Exercise.MuscleGroup.values()[mgroupSpinner.getSelectedItemPosition()], 
 							descBox.getText().toString(), Integer.parseInt(setNoBox.getText().toString()));
@@ -167,6 +172,7 @@ public class ExerciseActivity extends Activity {
 						
 						selected.setId(id);
 					}
+					//the new exercise is paired with the current day and added to the database.
 					db.createDayExercise(day_id, selected.getId());
 					adapter.clear(); adapter.addAll(db.getExercisesByDay(day_id));
 					adapter.notifyDataSetChanged();
@@ -192,27 +198,12 @@ public class ExerciseActivity extends Activity {
 	}
 	
 	
-	public void initListView(final ExerciseListViewAdapter adapter){
+	public void initListView(){
+		//build the list view and allow for multiple choice selection on long click to delete multiple list items at once.
 		listView = (ListView) findViewById(R.id.exercise_list);
 		listView.setAdapter(adapter);
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-		listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
-			
-			@Override
-			public boolean onPrepareActionMode(ActionMode arg0, Menu arg1) {
-				return false;
-			}
-			
-			@Override
-			public void onDestroyActionMode(ActionMode mode) {
-				adapter.removeSelection();
-			}
-			
-			@Override
-			public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-				mode.getMenuInflater().inflate(R.menu.delete_menu, menu);
-				return true;
-			}
+		listView.setMultiChoiceModeListener(new MultiSelectListener(adapter, listView) {
 			
 			@Override
 			public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
@@ -240,18 +231,10 @@ public class ExerciseActivity extends Activity {
                 }
 			}
 			
-			@Override
-			public void onItemCheckedStateChanged(ActionMode mode, int position,
-					long id, boolean checked) {
-			 
-				final int checkedCount = listView.getCheckedItemCount();
-				mode.setTitle(checkedCount + " Items Selected");
-				adapter.toggleSelection(position);
-			}
 		});
 		
 		listView.setOnItemClickListener(new OnItemClickListener() {
-
+			//on click gather the necessary data to be passed to the Set activity such as if there is a following exercise and then start the activity
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int position,
 					long id) {
@@ -261,12 +244,13 @@ public class ExerciseActivity extends Activity {
 				exerciseIntent.putExtra("exercise_id", e.getId());
 				if(position+1 < adapter.getCount() ){
 					next_exercise = (Exercise)listView.getItemAtPosition(position+1);
+					//keeps track of which exercise we are on in the list
 					next_pos = position +1;
+					exerciseIntent.putExtra("next_exercise_id", next_exercise.getId());
 				}
 				else{
 					next_exercise = null;
 				}
-				exerciseIntent.putExtra("next_exercise_id", next_exercise.getId());
 				startActivityForResult(exerciseIntent, 1);
 				overridePendingTransition(R.anim.slide_out_right, android.R.anim.fade_out);
 			}
@@ -275,7 +259,9 @@ public class ExerciseActivity extends Activity {
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+		//after returning to this activity automatically from the Set activity
+		//we either go to the next exercise and begin its Set activity (performItemClick)
+		//OR if it is the final exercise (next_exercise == null) then we display the end workout dialog, which open the ReportActivity.
 	    if (requestCode == 1) {
 	        if(resultCode == RESULT_OK){
 	            if(next_exercise != null){

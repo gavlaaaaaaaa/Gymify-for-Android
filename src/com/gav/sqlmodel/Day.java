@@ -15,6 +15,8 @@ public class Day {
 			return mask;
 		}
 	}
+	// Days of week used for "day" - match the index of the Weekday enum.
+	public static final String[] weekdays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 	private int id;
 	private String name;
 	private WeekDay weekday;

@@ -39,6 +39,7 @@ public class SetActivity extends Activity {
 	CountDownTimer cdt;
 	private Exercise next_exercise;
 	MediaPlayer mp;
+	ArrayList<Set> sets;
 	
 	
 	@Override
@@ -50,26 +51,33 @@ public class SetActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		//media player for the next set sound
 		mp = MediaPlayer.create(this, R.raw.finished);
 		
 		db = new DatabaseHelper(getApplicationContext());
 		exercise_id = getIntent().getIntExtra("exercise_id", 0);
-		next_exercise = db.getExercise(getIntent().getIntExtra("next_exercise_id", -1));
+		int id = getIntent().getIntExtra("next_exercise_id", -1);
+		//make sure there is a next exercise - otherwise set it to null
+		if(id >=0){
+			next_exercise = db.getExercise(getIntent().getIntExtra("next_exercise_id", -1));
+		}
+		else{
+			next_exercise = null;
+		}
 		currExercise = db.getExercise(exercise_id);
-		ArrayList<Set> sets = (ArrayList<Set>) db.getSetsByExercise(exercise_id);
+		sets = (ArrayList<Set>) db.getSetsByExercise(exercise_id);
 		
 		this.getActionBar().setTitle(currExercise.getName());
 		
+		//initialise the card adapter and set the maximum number of sets (so we know when we have finished this exercise and should start the next)
 		adapter = new CardAdapter(this, R.layout.card_row, new ArrayList<Set>(), sets, exercise_id);
 		adapter.setMaxSetNo(currExercise.getNoSets());
+		
 		listView = (ListView) findViewById(R.id.set_list);
 		listView.setAdapter(adapter);
 		adapter.clear();
+		//add the initial set to the screen
 		addSet();
-		
-		
-
-		
 		
 		db.closeDB();
 	}
@@ -101,6 +109,7 @@ public class SetActivity extends Activity {
 			return true;
 		case R.id.action_delete:
 			return true;	
+		//when using action bar back button - simulate onBackPressed() for animations
 		case android.R.id.home:
             onBackPressed();
             return true;
@@ -126,19 +135,22 @@ public class SetActivity extends Activity {
 		}
 	}
 	
-	
+	//adds a blank set card to the screen
 	public void addSet(){
 		adapter.add(new Set());
 		adapter.notifyDataSetChanged();
-		
 	}
 	
+	//create a dialog box to show a countdown timer of 60 seconds until the next set
+	//OR next exercise (if we have done all sets for this exercise) should begin.
+	//if next exercise then display the previous set data for this next exercise
+	// play sound on finish of timer and vibrate.
 	public void startTimer(final int curr_set_no, final int max_set_no){
 		this.closeKeyboard();
 		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 		View layout = inflater.inflate(R.layout.next_exercise_alert, (ViewGroup) findViewById(R.id.layout_root));
 		TextView tv = (TextView) layout.findViewById(R.id.next_exercise);
-		ArrayList<Set>sets = (ArrayList<Set>)db.getSetsByExercise(next_exercise.getId());
+		
 		alertDialog = new AlertDialog.Builder(this).create();
 		alertDialog.setView(layout);
 		alertDialog.setMessage("01:00");
@@ -148,6 +160,7 @@ public class SetActivity extends Activity {
 				end();
 			}
 			else{
+				sets = (ArrayList<Set>)db.getSetsByExercise(next_exercise.getId());
 				alertDialog.setTitle("Next Exercise " + next_exercise.getName() + " in...");
 				tv.setText("Last Logs:\nSet 1: "+sets.get(sets.size()-3).getWeight()+"kg	- " + sets.get(sets.size()-3).getNoReps() + " reps\n"
 						+ "Set 2: "+sets.get(sets.size()-2).getWeight()+"kg	- " + sets.get(sets.size()-2).getNoReps() + " reps\n"
@@ -180,6 +193,7 @@ public class SetActivity extends Activity {
 		
 		alertDialog.show();
 		
+		// countdown timer used to display tick countdown on screen - vibrates and plays sound on finish to alert user to start next set/exercise
 		cdt = new CountDownTimer(60000,1000){
 			@Override
 		    public void onTick(long millisUntilFinished) {
@@ -204,6 +218,7 @@ public class SetActivity extends Activity {
 		
 	}
 	
+	//called to notify that all sets have been finished so returns that the activity has successfully finished to the ExerciseActivity.
 	public void end(){
 		Intent returnIntent = new Intent();
 		setResult(Activity.RESULT_OK, returnIntent);
@@ -213,6 +228,8 @@ public class SetActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 	    super.onBackPressed();
+	    //ensure that the dialog and timer are closed and finished if the user presses the back button
+	    //prevents the timer continuing and notifying later out of context
 	    if(alertDialog != null && cdt != null){
 	    	alertDialog.dismiss();
 	    	cdt.cancel();

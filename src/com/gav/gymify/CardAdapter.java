@@ -6,11 +6,9 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.format.Time;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -19,13 +17,9 @@ import android.widget.Toast;
 import com.gav.sqlhelper.DatabaseHelper;
 import com.gav.sqlmodel.Set;
 
-public class CardAdapter extends ArrayAdapter<Set>{
+public class CardAdapter extends ListViewAdapter<Set>{
 	
-	private List<Set> sets;
 	private List<Set> previous;
-	private Context context;
-	private LayoutInflater inflater;
-	private SparseBooleanArray mSelectedItemsIds;
 	private DatabaseHelper db;
 	private int ex_id;
 	private int max_set_no;
@@ -34,13 +28,10 @@ public class CardAdapter extends ArrayAdapter<Set>{
 	int currPos = 0;
 	
 	
-	public CardAdapter(Context context, int resource, List<Set> sets, List<Set> previous, int ex_id) {
-		super(context, resource, sets);
-		this.context = context;
-		this.sets = sets;
+	public CardAdapter(Context context, int resource, List<Set> list, List<Set> previous, int ex_id) {
+		super(context, resource, list);
 		inflater = LayoutInflater.from(context);
 		this.previous = previous;
-		mSelectedItemsIds = new SparseBooleanArray();
 		db = new DatabaseHelper(this.getContext().getApplicationContext());
 		this.ex_id = ex_id;
 		curr_set_no = 0;
@@ -128,7 +119,7 @@ public class CardAdapter extends ArrayAdapter<Set>{
 
 	public void addSet(Set set){
 		if(this.curr_set_no <= getViewTypeCount()){
-			sets.add(set);
+			list.add(set);
 			this.notifyDataSetChanged();
 		}
 		else{
@@ -154,42 +145,5 @@ public class CardAdapter extends ArrayAdapter<Set>{
 		return this.max_set_no;
 	}
 	
-	public void remove(Set object) {
-        sets.remove(object);
-        notifyDataSetChanged();
-    }
- 
-    public List<Set> getSets() {
-        return sets;
-    }
- 
-    public void toggleSelection(int position) {
-        selectView(position, !mSelectedItemsIds.get(position));
-        
-    }
- 
-    public void removeSelection() {
-        mSelectedItemsIds = new SparseBooleanArray();
-        notifyDataSetChanged();
-    }
- 
-    public void selectView(int position, boolean value) {
-
-        if (value){
-            mSelectedItemsIds.put(position, value);
-        }
-        else{
-            mSelectedItemsIds.delete(position);
-        }
-        notifyDataSetChanged();
-    }
- 
-    public int getSelectedCount() {
-        return mSelectedItemsIds.size();
-    }
- 
-    public SparseBooleanArray getSelectedIds() {
-        return mSelectedItemsIds;
-    }
 
 }
