@@ -162,9 +162,6 @@ public class SetActivity extends Activity {
 			else{
 				sets = (ArrayList<Set>)db.getSetsByExercise(next_exercise.getId());
 				alertDialog.setTitle("Next Exercise " + next_exercise.getName() + " in...");
-				tv.setText("Last Logs:\nSet 1: "+sets.get(sets.size()-3).getWeight()+"kg	- " + sets.get(sets.size()-3).getNoReps() + " reps\n"
-						+ "Set 2: "+sets.get(sets.size()-2).getWeight()+"kg	- " + sets.get(sets.size()-2).getNoReps() + " reps\n"
-						+ "Set 3: "+sets.get(sets.size()-1).getWeight()+"kg	- " + sets.get(sets.size()-1).getNoReps() + " reps\n");
 				alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Do One More Set" , new DialogInterface.OnClickListener() {
 					
 					@Override
@@ -173,6 +170,16 @@ public class SetActivity extends Activity {
 						cdt.cancel();
 					}
 				});
+				
+				if(!sets.isEmpty()){
+					tv.setText("Last Logs:\nSet 1: "+sets.get(sets.size()-3).getWeight()+"kg	- " + sets.get(sets.size()-3).getNoReps() + " reps\n"
+							+ "Set 2: "+sets.get(sets.size()-2).getWeight()+"kg	- " + sets.get(sets.size()-2).getNoReps() + " reps\n"
+							+ "Set 3: "+sets.get(sets.size()-1).getWeight()+"kg	- " + sets.get(sets.size()-1).getNoReps() + " reps\n");
+					
+				}
+				else{
+					tv.setText("No previous set data for this exercise!");
+				}
 			}
 		}
 		else{
