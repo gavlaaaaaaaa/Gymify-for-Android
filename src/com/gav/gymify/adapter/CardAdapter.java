@@ -1,4 +1,4 @@
-package com.gav.gymify;
+package com.gav.gymify.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gav.gymify.R;
+import com.gav.gymify.SetActivity;
+import com.gav.gymify.R.id;
+import com.gav.gymify.R.layout;
 import com.gav.sqlhelper.DatabaseHelper;
 import com.gav.sqlmodel.Set;
 

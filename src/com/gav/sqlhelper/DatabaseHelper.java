@@ -163,7 +163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		day.setName(c.getString(c.getColumnIndex(KEY_NAME)));
 		day.setWeekday(Integer.valueOf(c.getString(c.getColumnIndex(KEY_WEEKDAY))));
 		
-		
+		c.close();
 		return day;
 	}
 	
@@ -186,7 +186,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				days.add(day);
 			} while (c.moveToNext());
 		}
-		
+		c.close();
 		return days;
 	}
 	
@@ -267,8 +267,26 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		ex.setMgroup(Integer.parseInt((c.getString(c.getColumnIndex(KEY_MGROUP)))));
 		ex.setDescription(c.getString(c.getColumnIndex(KEY_DESC)));
 		ex.setNoSets(Integer.parseInt(c.getString(c.getColumnIndex(KEY_NO_SETS))));
-		
+		c.close();
 		return ex;
+	}
+	
+	//get exercises by muscle group
+	public List<Exercise> getExercisesByMuscleGroup(int mgroup){
+		List<Exercise> exercises = new ArrayList<Exercise>();
+		
+		String selectQuery = "SELECT * FROM " + TABLE_EXERCISE + " WHERE " + KEY_MGROUP + " = '" + mgroup + "'";
+		
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+		if(c.moveToFirst()){
+			do {
+				Exercise ex = getExercise(c.getInt(c.getColumnIndex(KEY_ID)));
+				exercises.add(ex);
+			} while (c.moveToNext());
+		}
+		c.close();
+		return exercises;
 	}
 	
 	//get all exercises
@@ -291,7 +309,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				exercises.add(ex);
 			} while (c.moveToNext());
 		}
-		
+		c.close();
 		return exercises;
 	}
 	
@@ -311,7 +329,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				exercises.add(ex);
 			} while (c.moveToNext());
 		}
-		
+		c.close();
 		return exercises;
 	}
 	
@@ -388,7 +406,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		set.setCreate_time(c.getString(c.getColumnIndex(KEY_CREATE_TIME)));
 		set.setWeight(Double.parseDouble(c.getString(c.getColumnIndex(KEY_WEIGHT))));
 		set.setNoReps(Integer.parseInt(c.getString(c.getColumnIndex(KEY_REPS))));
-	
+		c.close();
 		return set;
 	}
 	
@@ -412,7 +430,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				sets.add(set);
 			} while (c.moveToNext());
 		}
-		
+		c.close();
 		return sets;
 	}
 	
@@ -432,9 +450,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				sets.add(s);
 			} while (c.moveToNext());
 		}
-		
+		c.close();
 		return sets;
 	}
+	
+	
+	
 	//update set
 	public int updateSet(Set set){
 		SQLiteDatabase db = this.getWritableDatabase();

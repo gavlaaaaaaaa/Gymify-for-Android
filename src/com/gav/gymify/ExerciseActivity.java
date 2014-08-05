@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.gav.gymify.adapter.ExerciseListViewAdapter;
 import com.gav.sqlhelper.DatabaseHelper;
 import com.gav.sqlmodel.Day;
 import com.gav.sqlmodel.Exercise;
@@ -277,7 +278,7 @@ public class ExerciseActivity extends Activity {
 	        			public void onClick(DialogInterface dialog, int which) {
 	        				// TODO show workout summary
 	        				onBackPressed();
-	        				Intent intent = new Intent(ExerciseActivity.this, ReportActivity.class);
+	        				Intent intent = new Intent(ExerciseActivity.this, ReportTabActivity.class);
 	        				startActivity(intent);
 	        			}
 	        		});

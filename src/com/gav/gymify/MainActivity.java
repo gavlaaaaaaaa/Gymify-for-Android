@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.gav.gymify.adapter.DayListViewAdapter;
 import com.gav.sqlhelper.DatabaseHelper;
 import com.gav.sqlmodel.Day;
 import com.gav.sqlmodel.Day.WeekDay;
@@ -78,7 +79,7 @@ public class MainActivity extends ActionBarActivity {
 		case R.id.action_delete:
 			return true;		
 		case R.id.action_report:
-			Intent intent = new Intent(MainActivity.this, ReportActivity.class);
+			Intent intent = new Intent(MainActivity.this, ReportTabActivity.class);
 			startActivity(intent);
 			return true;
 		}

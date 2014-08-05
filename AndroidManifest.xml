@@ -35,10 +35,13 @@
             android:parentActivityName="com.gav.gymify.ExerciseActivity"
             android:screenOrientation="portrait" >
         </activity>
-       
         <activity
-            android:name="com.gav.gymify.ReportActivity"
-            android:label="@string/title_activity_report" >
+            android:name="com.gav.gymify.ReportTabActivity"
+            android:label="@string/title_activity_report_tab"
+            android:parentActivityName="com.gav.gymify.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.support.v4.app.FragmentActivity" />
         </activity>
     </application>
 

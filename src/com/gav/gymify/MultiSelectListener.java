@@ -1,5 +1,7 @@
 package com.gav.gymify;
 
+import com.gav.gymify.adapter.ListViewAdapter;
+
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;

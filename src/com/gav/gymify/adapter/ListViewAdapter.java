@@ -1,4 +1,4 @@
-package com.gav.gymify;
+package com.gav.gymify.adapter;
 
 import java.util.List;
 

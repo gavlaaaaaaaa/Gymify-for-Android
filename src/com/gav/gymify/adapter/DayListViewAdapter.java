@@ -1,4 +1,4 @@
-package com.gav.gymify;
+package com.gav.gymify.adapter;
 
 import java.util.List;
 
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.gav.gymify.R;
+import com.gav.gymify.R.id;
+import com.gav.gymify.R.layout;
 import com.gav.sqlmodel.Day;
 
 public class DayListViewAdapter extends ListViewAdapter<Day>{
