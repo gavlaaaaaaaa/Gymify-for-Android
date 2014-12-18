@@ -33,13 +33,14 @@ public class ReportTabActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_report_tab);
-
+		overridePendingTransition(R.anim.abc_slide_in_top, android.R.anim.fade_out);   
 		//initialise action bar, pager and adapter
 		actionBar = getActionBar();
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mAdapter = new ReportTabsPagerAdapter(getSupportFragmentManager(), new DatabaseHelper(getApplicationContext()));
 		
 		mViewPager.setAdapter(mAdapter);
+		actionBar.setTitle("Report Summary");
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.holo_blue_dark)));
 		
