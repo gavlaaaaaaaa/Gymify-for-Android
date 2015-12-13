@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.gav.gymify.MainActivity" >
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings" />
+    
+     <item
+        android:id="@+id/action_add_day"
+        android:icon="@android:drawable/ic_menu_add"
+         android:title="Add Day"/>
+     
+     <item
+        android:id="@+id/action_report"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="Report" />
+     
+     
+    
+</menu>
+
+<!-- From: file:/Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/res/menu/main.xml -->

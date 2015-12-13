@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <TextView
+        android:id="@+id/dayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:padding="15dp"
+        android:textColor="#FFFFFF"
+        />
+    
+    <TextView
+        android:id="@+id/weekday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:padding="15dp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_alignParentRight="true"
+        />
+    
+
+</RelativeLayout>
+<!-- From: file:/Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/res/layout/day_list_item_layout.xml -->

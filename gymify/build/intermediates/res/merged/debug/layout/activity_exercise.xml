@@ -1,0 +1,22 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gav.gymify.ExerciseActivity"
+    tools:ignore="MergeRootFrame"
+    android:padding="7dp"
+    android:background="#006699" >
+    
+    <ListView
+        android:id="@+id/exercise_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:listSelector="@drawable/list_item_selector"
+        android:background="#006699"
+        android:dividerHeight="2dp"
+        android:divider="@android:color/holo_blue_light"
+         />
+   
+</FrameLayout>
+<!-- From: file:/Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/res/layout/activity_exercise.xml -->

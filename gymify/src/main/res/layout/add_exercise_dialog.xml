@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:padding="30dp">
+    
+	<TextView
+	    android:id="@+id/ex_name_lbl"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Name: " 
+	    android:textSize="20dp"
+	    android:paddingTop="10dp"/>
+
+	<AutoCompleteTextView
+	    android:id="@+id/ex_name_edit"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:hint="e.g. Bench Press" 
+	    android:layout_toRightOf="@+id/ex_name_lbl" />
+	
+	<TextView
+	    android:id="@+id/ex_mgroup_lbl"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="MuscleGroup:  " 
+	    android:textSize="20dp"
+	    android:paddingTop="10dp"
+	    android:layout_below="@+id/ex_name_lbl"/>
+
+	<Spinner
+	    android:id="@+id/mgroup_spinner"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="@android:drawable/btn_dropdown"
+	    android:spinnerMode="dropdown" 
+	    android:layout_toRightOf="@+id/ex_mgroup_lbl" 
+	    android:layout_below="@+id/ex_name_edit"/>
+	
+	<TextView
+	    android:id="@+id/setnolbl"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Default Number of Sets:  " 
+	    android:textSize="20dp"
+	    android:paddingTop="20dp"
+	    android:layout_below="@+id/ex_mgroup_lbl"/>
+	
+	<EditText
+	    android:id="@+id/set_no_edit"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:hint="3" 
+	    android:textSize="20dp"
+	    android:inputType="numberSigned"
+	    android:layout_toRightOf="@+id/setnolbl"
+	    android:layout_below="@+id/mgroup_spinner"/>
+	
+	<EditText android:id="@+id/desc_edit"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="20dp"
+	    android:hint="Description... " 
+	    android:layout_below="@+id/setnolbl"/>
+
+	    
+</RelativeLayout>

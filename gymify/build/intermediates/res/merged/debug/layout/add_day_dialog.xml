@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:padding="30dp">
+    
+	<TextView
+	    android:id="@+id/day_name_lbl"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Name: " 
+	    android:textSize="20dp"
+	    android:paddingTop="10dp"/>
+
+	<EditText
+	    android:id="@+id/day_name_edit"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:hint="Chest and Triceps" 
+	    android:layout_toRightOf="@+id/day_name_lbl" />
+	
+	<TextView
+	    android:id="@+id/day_weekday_lbl"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Day:  " 
+	    android:textSize="20dp"
+	    android:paddingTop="10dp"
+	    android:layout_below="@+id/day_name_lbl"/>
+
+	<Spinner
+	    android:id="@+id/weekday_spinner"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="@android:drawable/btn_dropdown"
+	    android:spinnerMode="dropdown" 
+	    android:layout_toRightOf="@+id/day_weekday_lbl" 
+	    android:layout_below="@+id/day_name_edit"/>
+
+	    
+</RelativeLayout>
+<!-- From: file:/Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/res/layout/add_day_dialog.xml -->

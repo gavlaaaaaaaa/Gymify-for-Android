@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <LinearLayout 
+        android:id="@+id/graphLayout"
+        android:layout_width="wrap_content"
+   		android:layout_height="wrap_content" 
+   		android:orientation="horizontal"
+   		android:background="#006699"/>
+    
+    <TextView 
+        android:id="@+id/legend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="center_vertical|right"
+        android:padding="5dp"/>
+
+</FrameLayout>
+<!-- From: file:/Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/res/layout/fragment_report_details.xml -->

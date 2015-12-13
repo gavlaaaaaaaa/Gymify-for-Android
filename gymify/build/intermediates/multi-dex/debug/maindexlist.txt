@@ -1,0 +1,47 @@
+com/gav/gymify/ExerciseActivity$5.class
+
+com/gav/gymify/SetActivity.class
+com/gav/sqlmodel/Exercise.class
+-keep class com.gav.gymify.SetActivity { <init>(); }
+com/gav/gymify/MainActivity$1.class
+com/gav/gymify/R$id.class
+com/gav/gymify/MultiSelectListener.class
+com/gav/gymify/ReportTabActivity.class
+-keep public class * extends android.app.backup.BackupAgent {
+com/gav/gymify/ExerciseActivity$PlaceholderFragment.class
+com/gav/sqlmodel/Day.class
+com/gav/gymify/adapter/ListViewAdapter.class
+com/gav/gymify/R$anim.class
+com/gav/gymify/ExerciseActivity$7.class
+-keep class null {
+    void attachBaseContext(android.content.Context);
+-keep public class * extends java.lang.annotation.Annotation {
+com/gav/gymify/MainActivity$4.class
+com/gav/gymify/MainActivity$PlaceholderFragment.class
+-keep class com.gav.gymify.ReportTabActivity { <init>(); }
+com/gav/gymify/adapter/DayListViewAdapter.class
+com/gav/gymify/ExerciseActivity$3.class
+com/gav/gymify/ExerciseActivity$2.class
+com/gav/gymify/MainActivity.class
+com/gav/gymify/MainActivity$3.class
+com/gav/gymify/ExerciseActivity.class
+com/gav/sqlhelper/DatabaseHelper.class
+-keep class com.gav.gymify.MainActivity { <init>(); }
+com/gav/gymify/R$menu.class
+com/gav/gymify/adapter/ExerciseListViewAdapter.class
+com/gav/gymify/ExerciseActivity$6.class
+com/gav/gymify/ExerciseActivity$4.class
+com/gav/gymify/adapter/CardAdapter.class
+com/gav/gymify/R.class
+    <init>();
+com/gav/sqlmodel/Exercise$MuscleGroup.class
+-keep class com.gav.gymify.ExerciseActivity { <init>(); }
+com/jjoe64/graphview/GraphView.class
+com/gav/gymify/MainActivity$2.class
+com/gav/gymify/R$layout.class
+com/gav/sqlmodel/Set.class
+com/jjoe64/graphview/GraphViewSeries.class
+    *;
+com/gav/gymify/ExerciseActivity$1.class
+}
+com/gav/gymify/SetActivity$PlaceholderFragment.class
