@@ -16,9 +16,6 @@ ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManife
 uses-sdk
 ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:7:5-9:41
 MERGED from [com.android.support:multidex:1.0.1] /Users/Gav/AndroidStudioProjects/Gymify/gymify/build/intermediates/exploded-aar/com.android.support/multidex/1.0.1/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:cardview-v7:21.0.3] /Users/Gav/AndroidStudioProjects/Gymify/gymify/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/AndroidManifest.xml:15:5-42
-MERGED from [com.android.support:recyclerview-v7:21.0.3] /Users/Gav/AndroidStudioProjects/Gymify/gymify/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.3/AndroidManifest.xml:15:5-42
-MERGED from [com.android.support:support-v4:21.0.3] /Users/Gav/AndroidStudioProjects/Gymify/gymify/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/AndroidManifest.xml:15:5-42
 	android:targetSdkVersion
 		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:9:9-38
 		INJECTED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml
@@ -33,9 +30,6 @@ ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManife
 		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:11:22-63
 application
 ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:13:5-47:19
-MERGED from [com.android.support:cardview-v7:21.0.3] /Users/Gav/AndroidStudioProjects/Gymify/gymify/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/AndroidManifest.xml:16:5-19
-MERGED from [com.android.support:recyclerview-v7:21.0.3] /Users/Gav/AndroidStudioProjects/Gymify/gymify/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.3/AndroidManifest.xml:17:5-19:19
-MERGED from [com.android.support:support-v4:21.0.3] /Users/Gav/AndroidStudioProjects/Gymify/gymify/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/AndroidManifest.xml:16:5-19
 	android:label
 		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:16:9-41
 	android:allowBackup
@@ -94,9 +88,3 @@ ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManife
 		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:45:17-72
 	android:name
 		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:44:17-63
-activity#android.support.v7.widget.TestActivity
-ADDED from [com.android.support:recyclerview-v7:21.0.3] /Users/Gav/AndroidStudioProjects/Gymify/gymify/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.3/AndroidManifest.xml:18:9-115
-	android:label
-		ADDED from [com.android.support:recyclerview-v7:21.0.3] /Users/Gav/AndroidStudioProjects/Gymify/gymify/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.3/AndroidManifest.xml:18:19-59
-	android:name
-		ADDED from [com.android.support:recyclerview-v7:21.0.3] /Users/Gav/AndroidStudioProjects/Gymify/gymify/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.3/AndroidManifest.xml:18:60-113

@@ -23,7 +23,7 @@
         android:paddingTop="10dp"
         android:textColor="#FFFFFF" 
         android:textStyle="bold"
-        android:text="Weight: "/>
+        android:text="Weight: "
         android:layout_below="@+id/set_number"/>
     
     <EditText android:id="@+id/weight" 

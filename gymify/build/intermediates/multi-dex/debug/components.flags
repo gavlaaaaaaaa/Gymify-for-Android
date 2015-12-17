@@ -32,10 +32,6 @@
     <init>();
 }
 
--keep class android.support.v7.widget.TestActivity {
-    <init>();
-}
-
 -keep public class * extends android.app.backup.BackupAgent {
     <init>();
 }
