@@ -61,7 +61,7 @@ public class CardAdapter extends ListViewAdapter<Set>{
             // Locate the TextViews in listview_item.xml
             holder.setNumber = (TextView) view.findViewById(R.id.set_number);
             holder.weight = (EditText) view.findViewById(R.id.weight);
-            //holder.reps = (EditText) view.findViewById(R.id.reps);
+            holder.reps = (EditText) view.findViewById(R.id.reps);
             holder.confirm = (ImageButton) view.findViewById(R.id.confirm_btn);
     		
     		holder.confirm.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +77,7 @@ public class CardAdapter extends ListViewAdapter<Set>{
 						db.createExerciseSet(ex_id, id);
 						Toast.makeText(getContext(), "Set Saved", Toast.LENGTH_LONG).show();
 						holder.weight.setFocusable(false);
-						//holder.reps.setFocusable(false);
+						holder.reps.setFocusable(false);
 						holder.confirm.setClickable(false);
 						((View)v.getParent()).setBackgroundColor(Color.parseColor("#194775"));
 						doneSets.add(true);
@@ -95,16 +95,16 @@ public class CardAdapter extends ListViewAdapter<Set>{
     		if(previous.size() > position && (max_set_no - position) > 0){
     			if(previous.size() > max_set_no){
     				holder.weight.setText(String.valueOf(previous.get(previous.size()-(max_set_no-position)).getWeight()));
-    				//holder.reps.setText(String.valueOf(previous.get(previous.size()-(max_set_no-position)).getNoReps()));
+    				holder.reps.setText(String.valueOf(previous.get(previous.size()-(max_set_no-position)).getNoReps()));
     			}
     			else{
     				holder.weight.setText(String.valueOf(previous.get(position).getWeight()));
-    				//holder.reps.setText(String.valueOf(previous.get(position).getNoReps()));
+    				holder.reps.setText(String.valueOf(previous.get(position).getNoReps()));
     			}
             }
             else{
             	holder.weight.setHint("0");
-            	//holder.reps.setHint("0");
+            	holder.reps.setHint("0");
             }
     		 
             view.setTag(holder);

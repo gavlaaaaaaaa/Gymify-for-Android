@@ -44,7 +44,7 @@
         android:paddingTop="10dp"
         android:layout_marginTop="4dp" 
         android:text="kg" />
-    <!--
+
    <TextView android:id="@+id/reps_lbl"
        android:layout_height="wrap_content"
        android:layout_margin="4dp"
@@ -64,7 +64,7 @@
        android:textStyle="bold"
        android:layout_toRightOf="@+id/reps_lbl"
        android:layout_below="@+id/weight_lbl"/>
-   -->
+
     <ImageButton 
         android:id="@+id/confirm_btn"
         android:src="@drawable/ic_action_accept"

@@ -1,47 +1,105 @@
 com/gav/gymify/ExerciseActivity$5.class
 
+com/gav/gymify/MainActivity$1.class
+com/gav/gymify/ReportTabActivity.class
+android/support/annotation/DimenRes.class
+    void attachBaseContext(android.content.Context);
+android/support/v4/widget/CursorAdapter.class
+com/gav/gymify/MainActivity$4.class
+com/gav/gymify/ExerciseActivity$2.class
+android/support/v4/widget/DrawerLayout$EdgeGravity.class
+android/support/annotation/StyleableRes.class
+android/support/v4/widget/SimpleCursorAdapter.class
+android/support/annotation/MenuRes.class
+android/support/v4/view/MenuCompat.class
+android/support/annotation/IdRes.class
+android/support/annotation/LayoutRes.class
+android/support/annotation/StringRes.class
+android/support/annotation/RawRes.class
+android/support/annotation/StyleRes.class
+android/support/annotation/AnimRes.class
+android/support/annotation/XmlRes.class
+com/gav/gymify/R.class
+com/gav/sqlmodel/Exercise$MuscleGroup.class
+android/support/v4/widget/MaterialProgressDrawable$3.class
+android/support/annotation/AnyRes.class
+    *;
 com/gav/gymify/SetActivity.class
 com/gav/sqlmodel/Exercise.class
--keep class com.gav.gymify.SetActivity { <init>(); }
-com/gav/gymify/MainActivity$1.class
 com/gav/gymify/R$id.class
-com/gav/gymify/MultiSelectListener.class
-com/gav/gymify/ReportTabActivity.class
 -keep public class * extends android.app.backup.BackupAgent {
-com/gav/gymify/ExerciseActivity$PlaceholderFragment.class
+android/support/v7/widget/RecyclerView$ItemDecoration.class
 com/gav/sqlmodel/Day.class
-com/gav/gymify/adapter/ListViewAdapter.class
-com/gav/gymify/R$anim.class
 com/gav/gymify/ExerciseActivity$7.class
--keep class null {
-    void attachBaseContext(android.content.Context);
--keep public class * extends java.lang.annotation.Annotation {
-com/gav/gymify/MainActivity$4.class
-com/gav/gymify/MainActivity$PlaceholderFragment.class
+android/support/v4/widget/MaterialProgressDrawable$2.class
 -keep class com.gav.gymify.ReportTabActivity { <init>(); }
+android/support/annotation/AnimatorRes.class
 com/gav/gymify/adapter/DayListViewAdapter.class
-com/gav/gymify/ExerciseActivity$3.class
-com/gav/gymify/ExerciseActivity$2.class
-com/gav/gymify/MainActivity.class
 com/gav/gymify/MainActivity$3.class
+android/support/v4/app/FragmentManager.class
 com/gav/gymify/ExerciseActivity.class
 com/gav/sqlhelper/DatabaseHelper.class
--keep class com.gav.gymify.MainActivity { <init>(); }
-com/gav/gymify/R$menu.class
-com/gav/gymify/adapter/ExerciseListViewAdapter.class
+android/support/annotation/AttrRes.class
+android/support/annotation/BoolRes.class
+android/support/v4/view/ViewCompat$ImportantForAccessibility.class
+android/support/v4/widget/MaterialProgressDrawable$EndCurveInterpolator.class
+android/support/v4/view/ViewCompat$ResolvedLayoutDirectionMode.class
+android/support/v4/widget/MaterialProgressDrawable.class
+android/support/v4/app/ActionBarDrawerToggle.class
+android/support/v4/view/ViewCompat$LayoutDirectionMode.class
 com/gav/gymify/ExerciseActivity$6.class
-com/gav/gymify/ExerciseActivity$4.class
+android/support/v4/widget/ResourceCursorAdapter.class
+android/support/v4/app/DialogFragment$DialogStyle.class
+android/support/v4/widget/MaterialProgressDrawable$1.class
 com/gav/gymify/adapter/CardAdapter.class
-com/gav/gymify/R.class
-    <init>();
-com/gav/sqlmodel/Exercise$MuscleGroup.class
--keep class com.gav.gymify.ExerciseActivity { <init>(); }
+android/support/v4/app/FragmentTabHost.class
+android/support/annotation/IntegerRes.class
+com/jjoe64/graphview/GraphViewSeries.class
+android/support/v4/app/NotificationCompat$Builder.class
+}
+android/support/v4/widget/MaterialProgressDrawable$ProgressDrawableSize.class
+-keep class com.gav.gymify.SetActivity { <init>(); }
+com/gav/gymify/MultiSelectListener.class
+android/support/annotation/InterpolatorRes.class
+com/gav/gymify/R$anim.class
+android/support/annotation/ColorRes.class
+com/gav/gymify/MainActivity$PlaceholderFragment.class
+android/support/v4/widget/DrawerLayout$LockMode.class
+android/support/v4/view/ViewCompat$LayerType.class
+android/support/annotation/FractionRes.class
+android/support/annotation/PluralsRes.class
+android/support/v4/widget/SwipeRefreshLayout.class
+com/gav/gymify/ExerciseActivity$4.class
+android/support/annotation/NonNull.class
+android/support/v4/view/ViewCompat$AccessibilityLiveRegion.class
+android/support/v7/widget/RecyclerView$LayoutManager.class
 com/jjoe64/graphview/GraphView.class
 com/gav/gymify/MainActivity$2.class
 com/gav/gymify/R$layout.class
-com/gav/sqlmodel/Set.class
-com/jjoe64/graphview/GraphViewSeries.class
-    *;
+android/support/v4/view/ViewCompat$OverScroll.class
 com/gav/gymify/ExerciseActivity$1.class
-}
+android/support/v4/widget/MaterialProgressDrawable$StartCurveInterpolator.class
+android/support/annotation/Nullable.class
+com/gav/gymify/ExerciseActivity$PlaceholderFragment.class
+com/gav/gymify/adapter/ListViewAdapter.class
+-keep class null {
+-keep public class * extends java.lang.annotation.Annotation {
+com/gav/gymify/ExerciseActivity$3.class
+com/gav/gymify/MainActivity.class
+android/support/annotation/ArrayRes.class
+android/support/annotation/DrawableRes.class
+-keep class com.gav.gymify.MainActivity { <init>(); }
+com/gav/gymify/R$menu.class
+com/gav/gymify/adapter/ExerciseListViewAdapter.class
+android/support/v4/widget/MaterialProgressDrawable$Ring.class
+android/support/v4/widget/SlidingPaneLayout.class
+-keep class android.support.v7.widget.TestActivity { <init>(); }
+    <init>();
+-keep class com.gav.gymify.ExerciseActivity { <init>(); }
+android/support/annotation/StringDef.class
+android/support/annotation/IntDef.class
+com/gav/sqlmodel/Set.class
+android/support/v4/widget/DrawerLayout$State.class
 com/gav/gymify/SetActivity$PlaceholderFragment.class
+android/support/v4/app/FragmentTransaction$Transit.class
+android/support/v7/widget/StaggeredGridLayoutManager.class

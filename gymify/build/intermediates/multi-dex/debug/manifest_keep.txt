@@ -6,6 +6,7 @@
 -keep class com.gav.gymify.ExerciseActivity { <init>(); }
 -keep class com.gav.gymify.SetActivity { <init>(); }
 -keep class com.gav.gymify.ReportTabActivity { <init>(); }
+-keep class android.support.v7.widget.TestActivity { <init>(); }
 -keep public class * extends android.app.backup.BackupAgent {
     <init>();
 }
