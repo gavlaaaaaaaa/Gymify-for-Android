@@ -135,7 +135,7 @@ public class ExerciseActivity extends Activity {
 					long arg3) {
 				//get the selected exercise from the autocomplete box and fill in the form details based on the exercises current details
 				selected = (Exercise)pView.getAdapter().getItem(pos);
-				mgroupSpinner.setSelection(((ArrayAdapter<String>)mgroupSpinner.getAdapter()).getPosition(Exercise.mgroups[selected.getMgroup().getMask()]));
+				mgroupSpinner.setSelection(((ArrayAdapter<String>)mgroupSpinner.getAdapter()).getPosition(Exercise.mgroups[selected.getExerciseType().getGroup()]));
 				setNoBox.setText(String.valueOf(selected.getNoSets()));
 				if(!selected.getDescription().isEmpty()){
 					descBox.setText(selected.getDescription());
@@ -156,7 +156,7 @@ public class ExerciseActivity extends Activity {
 				if(!nameBox.getText().toString().isEmpty()){
 					//check if the exercise is a premade one (has been selected using the autocomplete feature OR whether it must be created from scratch
 					if(selected == null){
-						selected = new Exercise(nameBox.getText().toString(), Exercise.MuscleGroup.values()[mgroupSpinner.getSelectedItemPosition()], 
+						selected = new Exercise(nameBox.getText().toString(), null/*TODO:get exercise type properly. Exercise.MuscleGroup.values()[mgroupSpinner.getSelectedItemPosition()]*/,
 							descBox.getText().toString(), Integer.parseInt(setNoBox.getText().toString()));
 						if(setNoBox.getText().toString().isEmpty()){
 							selected.setNoSets(3);

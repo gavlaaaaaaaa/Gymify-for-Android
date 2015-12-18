@@ -9,11 +9,13 @@ com/gav/gymify/R$anim.class
 com/gav/gymify/MainActivity$4.class
 com/gav/gymify/MainActivity$PlaceholderFragment.class
 com/gav/gymify/ExerciseActivity$2.class
+com/google/gson/JsonNull.class
+com/gav/sqlmodel/Exercise$ExerciseType.class
 com/gav/gymify/SetActivity$2.class
 com/gav/gymify/ExerciseActivity$4.class
 com/gav/gymify/R.class
-com/gav/sqlmodel/Exercise$MuscleGroup.class
 com/jjoe64/graphview/GraphView.class
+com/google/gson/annotations/JsonAdapter.class
 com/gav/gymify/MainActivity$2.class
 com/gav/gymify/R$layout.class
     *;
@@ -32,8 +34,10 @@ com/gav/gymify/ExerciseActivity$7.class
 -keep class com.gav.gymify.ReportTabActivity { <init>(); }
 com/gav/gymify/adapter/DayListViewAdapter.class
 com/gav/gymify/ExerciseActivity$3.class
+com/google/gson/annotations/Expose.class
 com/gav/gymify/MainActivity.class
 com/gav/gymify/MainActivity$3.class
+com/google/gson/annotations/Until.class
 com/gav/gymify/ExerciseActivity.class
 com/gav/sqlhelper/DatabaseHelper.class
 -keep class com.gav.gymify.MainActivity { <init>(); }
@@ -41,6 +45,9 @@ com/gav/gymify/R$menu.class
 com/gav/gymify/adapter/ExerciseListViewAdapter.class
 com/gav/gymify/ExerciseActivity$6.class
 com/gav/gymify/adapter/CardAdapter.class
+com/google/gson/reflect/TypeToken.class
+com/google/gson/annotations/SerializedName.class
+com/google/gson/annotations/Since.class
     <init>();
 -keep class com.gav.gymify.ExerciseActivity { <init>(); }
 com/gav/gymify/SetActivity$3.class

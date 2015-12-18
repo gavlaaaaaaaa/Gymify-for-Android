@@ -30,7 +30,7 @@ public class ReportDetailsFragment extends Fragment {
 	
 	public ReportDetailsFragment(DatabaseHelper db, int mgroup){
 		super();
-		exercises = (ArrayList<Exercise>)db.getExercisesByMuscleGroup(mgroup);
+		exercises = (ArrayList<Exercise>)db.getAllExercises();
 		this.db = db;
 	}
 	

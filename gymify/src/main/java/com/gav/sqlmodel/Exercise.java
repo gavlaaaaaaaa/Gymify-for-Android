@@ -1,27 +1,84 @@
 package com.gav.sqlmodel;
 
+import com.google.gson.Gson;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Exercise {
-	
-	public enum MuscleGroup{
-		CHEST(0), BICEP(1), TRICEP(2), BACK(3), SHOULDER(4), ABS(5), LEG(6);
-		private final int mask;
-		private MuscleGroup(int mask){
-			this.mask = mask;
+
+	public static class ExerciseType implements Serializable {
+		private String type;
+		private MuscleGroup mgroup;
+		private CardioGroup cgroup;
+
+		Gson gson = new Gson();
+
+
+		public ExerciseType(){}
+		public ExerciseType(MuscleGroup group){
+			this.type = "WEIGHT";
+			this.mgroup = group;
 		}
-		
-		public int getMask(){
-			return mask;
+		public ExerciseType(CardioGroup group){
+			this.type = "CARDIO";
+			this.cgroup= group;
+		}
+
+		public enum MuscleGroup {
+			CHEST(0), BICEP(1), TRICEP(2), BACK(3), SHOULDER(4), ABS(5), LEG(6);
+			private final int mask;
+
+			private MuscleGroup(int mask) {
+				this.mask = mask;
+			}
+
+			public int getMask() {
+				return mask;
+			}
+		}
+
+		public enum CardioGroup {
+			RUN(0), CYCLE(1), ROW(2);
+			private final int mask;
+
+			private CardioGroup(int mask) {
+				this.mask = mask;
+			}
+
+			public int getMask() {
+				return mask;
+			}
+		}
+
+		public String getType(){return this.type; }
+
+		public String getJson(){
+			return new String(gson.toJson(this));
+		}
+
+		public int getGroup(){
+			if (this.type.equals("WEIGHT")){
+				return this.mgroup.getMask();
+			}
+			else if(this.type.equals("CARDIO") ){
+				return this.mgroup.getMask();
+			}
+			else{
+				return 0;
+			}
+
 		}
 	}
+
 	
 	public static String [] mgroups = {"Chest", "Biceps", "Triceps", "Back", "Shoulders", "Abs", "Legs"};
-	
+	public static String [] cgroups = {"Run", "Cycle", "Row"};
+
 	private int id;
 	private String name;
-	private MuscleGroup mgroup;
+	private ExerciseType exerciseType;
 	private String description;
 	private int noSets;
 	private List<Set> sets;
@@ -29,20 +86,20 @@ public class Exercise {
 	
 	
 	public Exercise(){
-		id = 0; name = ""; mgroup = MuscleGroup.CHEST; description = ""; 
+		id = 0; name = ""; exerciseType=new ExerciseType(); description = "";
 	}
 	
-	public Exercise(int id, String name, MuscleGroup mgroup, String description, int noSets) {
+	public Exercise(int id, String name, ExerciseType type, String description, int noSets) {
 		this.id = id;
 		this.name = name;
-		this.mgroup = mgroup;
+		this.exerciseType = type;
 		this.description = description;
 		this.noSets = noSets;
 	}
 	
-	public Exercise(String name, MuscleGroup mgroup, String description, int noSets) {
+	public Exercise(String name, ExerciseType type, String description, int noSets) {
 		this.name = name;
-		this.mgroup = mgroup;
+		this.exerciseType = type;
 		this.description = description;
 		this.noSets = noSets;
 	}
@@ -63,12 +120,12 @@ public class Exercise {
 		this.name = name;
 	}
 
-	public MuscleGroup getMgroup() {
-		return mgroup;
+	public ExerciseType getExerciseType() {
+		return exerciseType;
 	}
 
-	public void setMgroup(int mgroup) {
-		this.mgroup = MuscleGroup.values()[mgroup];
+	public void setExerciseType(ExerciseType type) {
+		this.exerciseType = type;
 	}
 
 	public String getDescription() {

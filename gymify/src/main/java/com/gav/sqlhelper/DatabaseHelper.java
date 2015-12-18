@@ -6,6 +6,7 @@ import java.util.List;
 import com.gav.sqlmodel.Day;
 import com.gav.sqlmodel.Exercise;
 import com.gav.sqlmodel.Set;
+import com.google.gson.Gson;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -39,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String KEY_WEEKDAY = "weekday";
 	
 	//EXERCISE Table column names
-	private static final String KEY_MGROUP = "mgroup";
+	private static final String KEY_EXTYPE = "ex_type";
 	private static final String KEY_DESC = "description";
 	private static final String KEY_NO_SETS = "no_sets";
 	
@@ -61,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//Exercise Table
 	private static final String CREATE_TABLE_EXERCISE = "CREATE TABLE "
             + TABLE_EXERCISE + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME
-            + " TEXT," + KEY_MGROUP + " TEXT," + KEY_DESC
+            + " TEXT," + KEY_EXTYPE + " TEXT," + KEY_DESC
             + " TEXT, " + KEY_NO_SETS + " TEXT" + ")";
 	
 	//Day Table
@@ -82,6 +83,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public DatabaseHelper(Context context){
 		super(context, DB_NAME, null, DB_VERSION);
 	}
+
+	private Gson gson = new Gson();
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -234,7 +237,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		ContentValues values = new ContentValues();
 		values.put(KEY_NAME, exercise.getName());
-		values.put(KEY_MGROUP, exercise.getMgroup().getMask());
+		values.put(KEY_EXTYPE, exercise.getExerciseType().getJson());
 		values.put(KEY_DESC, exercise.getDescription());
 		values.put(KEY_NO_SETS, exercise.getNoSets());
 		//insert day row into db
@@ -260,34 +263,17 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		if(c != null){
 			c.moveToFirst();
 		}
-		
+
 		Exercise ex = new Exercise();
 		ex.setId(c.getInt(c.getColumnIndex(KEY_ID)));
 		ex.setName(c.getString(c.getColumnIndex(KEY_NAME)));
-		ex.setMgroup(Integer.parseInt((c.getString(c.getColumnIndex(KEY_MGROUP)))));
+		ex.setExerciseType(gson.fromJson(c.getString(c.getColumnIndex(KEY_EXTYPE)), Exercise.ExerciseType.class));
 		ex.setDescription(c.getString(c.getColumnIndex(KEY_DESC)));
 		ex.setNoSets(Integer.parseInt(c.getString(c.getColumnIndex(KEY_NO_SETS))));
 		c.close();
 		return ex;
 	}
-	
-	//get exercises by muscle group
-	public List<Exercise> getExercisesByMuscleGroup(int mgroup){
-		List<Exercise> exercises = new ArrayList<Exercise>();
-		
-		String selectQuery = "SELECT * FROM " + TABLE_EXERCISE + " WHERE " + KEY_MGROUP + " = '" + mgroup + "'";
-		
-		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor c = db.rawQuery(selectQuery, null);
-		if(c.moveToFirst()){
-			do {
-				Exercise ex = getExercise(c.getInt(c.getColumnIndex(KEY_ID)));
-				exercises.add(ex);
-			} while (c.moveToNext());
-		}
-		c.close();
-		return exercises;
-	}
+
 	
 	//get all exercises
 	public List<Exercise> getAllExercises() {
@@ -303,7 +289,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				Exercise ex = new Exercise();
 				ex.setId(c.getInt(c.getColumnIndex(KEY_ID)));
 				ex.setName(c.getString(c.getColumnIndex(KEY_NAME)));
-				ex.setMgroup(Integer.parseInt(c.getString(c.getColumnIndex(KEY_MGROUP))));
+				ex.setExerciseType(gson.fromJson(c.getString(c.getColumnIndex(KEY_EXTYPE)), Exercise.ExerciseType.class));
 				ex.setDescription(c.getString(c.getColumnIndex(KEY_DESC)));
 				ex.setNoSets(Integer.parseInt(c.getString(c.getColumnIndex(KEY_NO_SETS))));
 				exercises.add(ex);
@@ -339,7 +325,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		ContentValues values = new ContentValues();
 		values.put(KEY_NAME, ex.getName());
-		values.put(KEY_MGROUP, ex.getMgroup().getMask());
+		values.put(KEY_EXTYPE, ex.getExerciseType().getJson());
 		values.put(KEY_DESC, ex.getDescription());
 		values.put(KEY_NO_SETS, ex.getNoSets());
 		
