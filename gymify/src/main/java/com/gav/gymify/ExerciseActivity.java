@@ -22,6 +22,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gav.gymify.adapter.ExerciseListViewAdapter;
@@ -79,7 +80,7 @@ public class ExerciseActivity extends Activity {
 		case R.id.action_settings:
 			return true;
 		case R.id.action_add_exercise:
-			displayAddExerciseDialog(null);
+			chooseExerciseType(listView);
 			return true;
 		case R.id.action_delete:
 			return true;
@@ -105,22 +106,72 @@ public class ExerciseActivity extends Activity {
 		}
 	}
 
+	public void chooseExerciseType(View view){
+		AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+		builder.setTitle("Add Exercise");
+		builder.setMessage("Choose Exercise Type");
+		builder.setPositiveButton("Weights",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+						displayAddExerciseDialog(new Exercise.ExerciseType(Exercise.ExerciseType.MuscleGroup.CHEST));
+					}
+				});
+
+
+		builder.setNeutralButton("Cardio",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+						displayAddExerciseDialog(new Exercise.ExerciseType(Exercise.ExerciseType.CardioGroup.RUN));
+					}
+				});
+		AlertDialog dialog = builder.create();
+		dialog.setCanceledOnTouchOutside(true);
+		dialog.show();
+	}
+
 	//need view parameter to allow onclick for FAB (add button)
-	public void displayAddExerciseDialog(View view){
+	public void displayAddExerciseDialog(Exercise.ExerciseType type){
+		final Exercise.ExerciseType eType = type;
+
 		// set up layout
 		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 		View layout = inflater.inflate(R.layout.add_exercise_dialog, (ViewGroup) findViewById(R.id.layout_root));
 		
 		//Initialize dialog items
 		final AutoCompleteTextView nameBox = (AutoCompleteTextView) layout.findViewById(R.id.ex_name_edit);
+		final TextView activityLbl = (TextView) layout.findViewById(R.id.ex_type_lbl);
+		final TextView goalLbl = (TextView) layout.findViewById(R.id.goal_lbl);
 		final EditText descBox = (EditText) layout.findViewById(R.id.desc_edit);
-		final EditText setNoBox = (EditText) layout.findViewById(R.id.set_no_edit);
-		final Spinner mgroupSpinner = (Spinner) layout.findViewById(R.id.mgroup_spinner);
+		final EditText goalBox = (EditText) layout.findViewById(R.id.goal_edit);
+		final Spinner typeSpinner = (Spinner) layout.findViewById(R.id.type_spinner);
+
 		//set up spinner
-		ArrayAdapter<String>spinnerAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, Exercise.mgroups);
-		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		mgroupSpinner.setAdapter(spinnerAdapter);
+		ArrayAdapter<String>spinnerAdapter = null;
+		if(type.getType().equals("WEIGHT")){
+			//set up labels for WEIGHT
+			activityLbl.setText("Muscle Group");
+			goalLbl.setText("Default Number\nof Sets");
+			spinnerAdapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_spinner_item, Exercise.ExerciseType.mgroups);
+			spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			typeSpinner.setAdapter(spinnerAdapter);
+		}
+		else if(type.getType().equals("CARDIO")){
+			//set up labels for CARDIO
+			activityLbl.setText("Activity");
+			goalLbl.setText("Goal (Distance)");
+			spinnerAdapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_spinner_item, Exercise.ExerciseType.cgroups);
+			spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			typeSpinner.setAdapter(spinnerAdapter);
+		}
+		else{
+			//invalid type - somethings gone wrong - shouldnt reach here
+			return;
+		}
+
 		
 		//Initialize exercise array for auto complete
 		final ArrayList<Exercise> exercises = (ArrayList<Exercise>)db.getAllExercises();
@@ -133,10 +184,10 @@ public class ExerciseActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> pView, View view, int pos,
 					long arg3) {
-				//get the selected exercise from the autocomplete box and fill in the form details based on the exercises current details
+				//TODO: Needs doing properly - get the selected exercise from the autocomplete box and fill in the form details based on the exercises current details
 				selected = (Exercise)pView.getAdapter().getItem(pos);
-				mgroupSpinner.setSelection(((ArrayAdapter<String>)mgroupSpinner.getAdapter()).getPosition(Exercise.mgroups[selected.getExerciseType().getGroup()]));
-				setNoBox.setText(String.valueOf(selected.getNoSets()));
+				typeSpinner.setSelection(((ArrayAdapter<String>)typeSpinner.getAdapter()).getPosition(selected.getExerciseType().getGroupString()));
+				goalBox.setText(String.valueOf(selected.getNoSets()));
 				if(!selected.getDescription().isEmpty()){
 					descBox.setText(selected.getDescription());
 				}
@@ -156,9 +207,9 @@ public class ExerciseActivity extends Activity {
 				if(!nameBox.getText().toString().isEmpty()){
 					//check if the exercise is a premade one (has been selected using the autocomplete feature OR whether it must be created from scratch
 					if(selected == null){
-						selected = new Exercise(nameBox.getText().toString(), null/*TODO:get exercise type properly. Exercise.MuscleGroup.values()[mgroupSpinner.getSelectedItemPosition()]*/,
-							descBox.getText().toString(), Integer.parseInt(setNoBox.getText().toString()));
-						if(setNoBox.getText().toString().isEmpty()){
+						selected = new Exercise(nameBox.getText().toString(), eType/*TODO:get exercise type properly. Exercise.MuscleGroup.values()[mgroupSpinner.getSelectedItemPosition()]*/,
+							descBox.getText().toString(), Integer.parseInt(goalBox.getText().toString()));
+						if(goalBox.getText().toString().isEmpty()){
 							selected.setNoSets(3);
 						}
 						int id = (int)db.createExercise(selected, new long[]{});

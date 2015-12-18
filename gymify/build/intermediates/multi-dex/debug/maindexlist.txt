@@ -9,6 +9,7 @@ com/gav/gymify/R$anim.class
 com/gav/gymify/MainActivity$4.class
 com/gav/gymify/MainActivity$PlaceholderFragment.class
 com/gav/gymify/ExerciseActivity$2.class
+com/gav/gymify/ExerciseActivity$8.class
 com/google/gson/JsonNull.class
 com/gav/sqlmodel/Exercise$ExerciseType.class
 com/gav/gymify/SetActivity$2.class
@@ -52,6 +53,7 @@ com/google/gson/annotations/Since.class
 -keep class com.gav.gymify.ExerciseActivity { <init>(); }
 com/gav/gymify/SetActivity$3.class
 com/gav/sqlmodel/Set.class
+com/gav/gymify/ExerciseActivity$9.class
 com/jjoe64/graphview/GraphViewSeries.class
 }
 com/gav/gymify/SetActivity$PlaceholderFragment.class

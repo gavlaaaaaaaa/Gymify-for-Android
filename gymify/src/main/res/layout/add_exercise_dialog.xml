@@ -22,35 +22,33 @@
 	    android:layout_toRightOf="@+id/ex_name_lbl" />
 	
 	<TextView
-	    android:id="@+id/ex_mgroup_lbl"
+	    android:id="@+id/ex_type_lbl"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:text="MuscleGroup:  " 
 	    android:textSize="20dp"
 	    android:paddingTop="10dp"
 	    android:layout_below="@+id/ex_name_lbl"/>
 
 	<Spinner
-	    android:id="@+id/mgroup_spinner"
+	    android:id="@+id/type_spinner"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 		android:background="@android:color/holo_blue_dark"
 		android:paddingTop="15dp"
 	    android:spinnerMode="dropdown" 
-	    android:layout_toRightOf="@+id/ex_mgroup_lbl" 
+	    android:layout_toRightOf="@+id/ex_type_lbl"
 	    android:layout_below="@+id/ex_name_edit"/>
 	
 	<TextView
-	    android:id="@+id/setnolbl"
+	    android:id="@+id/goal_lbl"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:text="Default Number\nof Sets:  "
 	    android:textSize="20dp"
 	    android:paddingTop="10dp"
-	    android:layout_below="@+id/ex_mgroup_lbl"/>
+	    android:layout_below="@+id/ex_type_lbl"/>
 	
 	<EditText
-	    android:id="@+id/set_no_edit"
+	    android:id="@+id/goal_edit"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:hint="3" 
@@ -58,15 +56,15 @@
 	    android:inputType="numberSigned"
 		android:paddingTop="30dp"
 		android:layout_marginLeft="15dp"
-	    android:layout_toRightOf="@+id/setnolbl"
-	    android:layout_below="@+id/ex_mgroup_lbl"/>
+	    android:layout_toRightOf="@+id/goal_lbl"
+	    android:layout_below="@+id/ex_type_lbl"/>
 	
 	<EditText android:id="@+id/desc_edit"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_marginTop="20dp"
 	    android:hint="Description... " 
-	    android:layout_below="@+id/setnolbl"/>
+	    android:layout_below="@+id/goal_lbl"/>
 
 	    
 </RelativeLayout>

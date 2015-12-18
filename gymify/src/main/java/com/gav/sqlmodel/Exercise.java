@@ -13,6 +13,8 @@ public class Exercise {
 		private MuscleGroup mgroup;
 		private CardioGroup cgroup;
 
+		public static String [] mgroups = {"Chest", "Biceps", "Triceps", "Back", "Shoulders", "Abs", "Legs"};
+		public static String [] cgroups = {"Run", "Cycle", "Row"};
 		Gson gson = new Gson();
 
 
@@ -63,18 +65,29 @@ public class Exercise {
 				return this.mgroup.getMask();
 			}
 			else if(this.type.equals("CARDIO") ){
-				return this.mgroup.getMask();
+				return this.cgroup.getMask();
 			}
 			else{
 				return 0;
 			}
 
 		}
+
+		public String getGroupString(){
+			if (this.type.equals("WEIGHT")){
+				return mgroups[this.mgroup.getMask()];
+			}
+			else if(this.type.equals("CARDIO") ){
+				return cgroups[this.cgroup.getMask()];
+			}
+			else{
+				return "";
+			}
+		}
 	}
 
 	
-	public static String [] mgroups = {"Chest", "Biceps", "Triceps", "Back", "Shoulders", "Abs", "Legs"};
-	public static String [] cgroups = {"Run", "Cycle", "Row"};
+
 
 	private int id;
 	private String name;

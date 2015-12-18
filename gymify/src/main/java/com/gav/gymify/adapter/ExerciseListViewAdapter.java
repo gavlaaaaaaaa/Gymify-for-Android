@@ -42,7 +42,7 @@ public class ExerciseListViewAdapter extends ListViewAdapter<Exercise>{
         }
         // Capture position and set to the TextViews
         holder.name.setText(((Exercise) list.get(position)).getName());
-        holder.mgroup.setText((Exercise.mgroups[((Exercise) list.get(position)).getExerciseType().getGroup()]));
+        holder.mgroup.setText((Exercise.ExerciseType.mgroups[((Exercise) list.get(position)).getExerciseType().getGroup()]));
         
         return view;
     }
