@@ -79,7 +79,7 @@ public class ExerciseActivity extends Activity {
 		case R.id.action_settings:
 			return true;
 		case R.id.action_add_exercise:
-			displayAddExerciseDialog();
+			displayAddExerciseDialog(null);
 			return true;
 		case R.id.action_delete:
 			return true;
@@ -104,8 +104,9 @@ public class ExerciseActivity extends Activity {
 			return rootView;
 		}
 	}
-	
-	public void displayAddExerciseDialog(){
+
+	//need view parameter to allow onclick for FAB (add button)
+	public void displayAddExerciseDialog(View view){
 		// set up layout
 		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 		View layout = inflater.inflate(R.layout.add_exercise_dialog, (ViewGroup) findViewById(R.id.layout_root));

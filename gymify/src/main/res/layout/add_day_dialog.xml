@@ -34,7 +34,8 @@
 	    android:id="@+id/weekday_spinner"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:background="@android:drawable/btn_dropdown"
+	    android:background="@android:color/holo_blue_dark"
+		android:paddingTop="15dp"
 	    android:spinnerMode="dropdown" 
 	    android:layout_toRightOf="@+id/day_weekday_lbl" 
 	    android:layout_below="@+id/day_name_edit"/>

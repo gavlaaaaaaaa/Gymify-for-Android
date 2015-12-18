@@ -14,16 +14,17 @@
         android:layout_margin="4dp" 
         android:layout_width="wrap_content"
         android:textColor="#FFFFFF" 
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textSize="20sp"/>
         
     <TextView android:id="@+id/weight_lbl" 
         android:layout_height="wrap_content"
         android:layout_margin="4dp" 
         android:layout_width="wrap_content"
-        android:paddingTop="10dp"
+        android:paddingTop="5dp"
         android:textColor="#FFFFFF" 
         android:textStyle="bold"
-        android:text="Weight: "
+        android:text="Weight (kg): "
         android:layout_below="@+id/set_number"/>
     
     <EditText android:id="@+id/weight" 
@@ -36,14 +37,6 @@
         android:layout_toRightOf="@+id/weight_lbl"
         android:layout_below="@+id/set_number"/>
 
-
-    <TextView android:layout_toRightOf="@+id/weight"
-        android:layout_below="@+id/set_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:layout_marginTop="4dp" 
-        android:text="kg" />
 
    <TextView android:id="@+id/reps_lbl"
        android:layout_height="wrap_content"
@@ -69,9 +62,12 @@
         android:id="@+id/confirm_btn"
         android:src="@drawable/ic_action_accept"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark"
+        android:tint="@android:color/white"
+        android:layout_below="@+id/weight_lbl"
         />
      
  

@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
 		case R.id.action_settings:
 			return true;
 		case R.id.action_add_day:
-			displayAddDayDialog();
+			displayAddDayDialog(null);
 			return true;
 		case R.id.action_delete:
 			return true;		
@@ -101,8 +101,8 @@ public class MainActivity extends Activity {
 			return rootView;
 		}
 	}
-	
-	public void displayAddDayDialog(){
+	// need view param for onclick functionality within FAB (add button)
+	public void displayAddDayDialog(View view){
 		//layout inflater and View for the Add day Dialog
 		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 		View layout = inflater.inflate(R.layout.add_day_dialog, (ViewGroup) findViewById(R.id.layout_root));
@@ -118,7 +118,7 @@ public class MainActivity extends Activity {
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setView(layout);
-		builder.setTitle("Add Workout Day");
+		builder.setTitle("Add Routine");
 		
 		builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
 			

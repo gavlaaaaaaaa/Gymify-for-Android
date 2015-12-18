@@ -145,7 +145,7 @@ public class SetActivity extends Activity {
 	// play sound on finish of timer and vibrate.
 	public void startTimer(final int curr_set_no, final int max_set_no){
 		this.closeKeyboard();
-		/*LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 		View layout = inflater.inflate(R.layout.next_exercise_alert, (ViewGroup) findViewById(R.id.layout_root));
 		TextView tv = (TextView) layout.findViewById(R.id.next_exercise);
 		
@@ -221,7 +221,7 @@ public class SetActivity extends Activity {
 
 		    }
 		}.start();
-		*/
+
 	}
 	
 	//called to notify that all sets have been finished so returns that the activity has successfully finished to the ExerciseActivity.

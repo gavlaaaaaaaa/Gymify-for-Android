@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,24 +47,29 @@ public class CardAdapter extends ListViewAdapter<Set>{
 	
 	private class ViewHolder{
 		TextView setNumber;
+		TextView weight_lbl;
+		TextView reps_lbl;
 		EditText weight;
 		EditText reps;
 		ImageButton confirm;
-		
+
 	}
-	
+
 	public View getView(final int position, View view, ViewGroup parent) {
 
         final ViewHolder holder;
         if (view == null) {
             holder = new ViewHolder();
             view = inflater.inflate(R.layout.card_row, parent, false);
-           
+
             // Locate the TextViews in listview_item.xml
             holder.setNumber = (TextView) view.findViewById(R.id.set_number);
+			holder.weight_lbl = (TextView) view.findViewById(id.weight_lbl);
             holder.weight = (EditText) view.findViewById(R.id.weight);
+			holder.reps_lbl = (TextView) view.findViewById(id.reps_lbl);
             holder.reps = (EditText) view.findViewById(R.id.reps);
             holder.confirm = (ImageButton) view.findViewById(R.id.confirm_btn);
+
     		
     		holder.confirm.setOnClickListener(new View.OnClickListener() {
 				
@@ -75,11 +82,15 @@ public class CardAdapter extends ListViewAdapter<Set>{
 						int id = (int)db.createSet(s);
 						s.setId(id);
 						db.createExerciseSet(ex_id, id);
-						Toast.makeText(getContext(), "Set Saved", Toast.LENGTH_LONG).show();
+						Toast.makeText(v.getContext().getApplicationContext(), "Set Saved", Toast.LENGTH_LONG).show();
 						holder.weight.setFocusable(false);
 						holder.reps.setFocusable(false);
 						holder.confirm.setClickable(false);
 						((View)v.getParent()).setBackgroundColor(Color.parseColor("#194775"));
+						holder.weight_lbl.setBackgroundColor(Color.parseColor("#194775"));
+						holder.reps_lbl.setBackgroundColor(Color.parseColor("#194775"));
+						holder.confirm.setBackgroundColor(Color.parseColor("#194775"));
+						holder.setNumber.setBackgroundColor(Color.parseColor("#194775"));
 						doneSets.add(true);
 						currPos++;
 						curr_set_no++;

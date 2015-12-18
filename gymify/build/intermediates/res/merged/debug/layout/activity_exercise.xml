@@ -17,6 +17,19 @@
         android:dividerHeight="2dp"
         android:divider="@android:color/holo_blue_light"
          />
-   
+    <ImageButton style="@style/AppTheme"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:text="New Button"
+        android:id="@+id/OkBt"
+        android:elevation="10dp"
+        android:onClick="displayAddExerciseDialog"
+        android:src="@android:drawable/ic_input_add"
+        android:background="@drawable/circle"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:tint="@android:color/white"
+        />
 </FrameLayout>
 <!-- From: file:/Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/res/layout/activity_exercise.xml -->

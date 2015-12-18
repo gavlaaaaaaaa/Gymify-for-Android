@@ -2,9 +2,12 @@ package com.gav.gymify;
 
 import com.gav.gymify.adapter.ListViewAdapter;
 
+import android.graphics.Color;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.ListView;
 
@@ -28,6 +31,7 @@ public abstract class MultiSelectListener implements MultiChoiceModeListener {
 	@Override
 	public void onDestroyActionMode(ActionMode mode) {
 		adapter.removeSelection();
+		adapter.notifyDataSetChanged();
 	}
 	
 	@Override

@@ -5,11 +5,12 @@
     
     <TextView
         android:id="@+id/ex_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:padding="15dp"
         android:textColor="#FFFFFF"
+        android:background="@drawable/list_item_selector"
         />
     
     <TextView
@@ -20,6 +21,7 @@
         android:padding="15dp"
         android:textColor="@android:color/darker_gray"
         android:layout_alignParentRight="true"
+        android:background="@drawable/list_item_selector"
         />
     
 

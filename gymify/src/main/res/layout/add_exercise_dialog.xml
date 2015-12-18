@@ -34,7 +34,8 @@
 	    android:id="@+id/mgroup_spinner"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:background="@android:drawable/btn_dropdown"
+		android:background="@android:color/holo_blue_dark"
+		android:paddingTop="15dp"
 	    android:spinnerMode="dropdown" 
 	    android:layout_toRightOf="@+id/ex_mgroup_lbl" 
 	    android:layout_below="@+id/ex_name_edit"/>
@@ -43,9 +44,9 @@
 	    android:id="@+id/setnolbl"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:text="Default Number of Sets:  " 
+	    android:text="Default Number\nof Sets:  "
 	    android:textSize="20dp"
-	    android:paddingTop="20dp"
+	    android:paddingTop="10dp"
 	    android:layout_below="@+id/ex_mgroup_lbl"/>
 	
 	<EditText
@@ -55,8 +56,10 @@
 	    android:hint="3" 
 	    android:textSize="20dp"
 	    android:inputType="numberSigned"
+		android:paddingTop="30dp"
+		android:layout_marginLeft="15dp"
 	    android:layout_toRightOf="@+id/setnolbl"
-	    android:layout_below="@+id/mgroup_spinner"/>
+	    android:layout_below="@+id/ex_mgroup_lbl"/>
 	
 	<EditText android:id="@+id/desc_edit"
 	    android:layout_width="fill_parent"

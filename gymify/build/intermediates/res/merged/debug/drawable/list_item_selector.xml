@@ -4,8 +4,9 @@
     android:exitFadeDuration="@android:integer/config_mediumAnimTime">
 
    <item android:drawable="@android:color/holo_blue_bright" android:state_pressed="true"/>
-   <item android:drawable="@android:color/holo_blue_light" android:state_selected="true"/>
-   <item android:drawable="@android:color/holo_blue_light" android:state_activated="true"/>
+   <item android:drawable="@android:color/holo_purple" android:state_activated="true"/>
+    <item android:drawable="@android:color/holo_blue_light" android:state_empty="true" />
+    <item android:drawable="@android:color/holo_blue_dark"/>
 
 </selector>
 <!-- From: file:/Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/res/drawable/list_item_selector.xml -->
