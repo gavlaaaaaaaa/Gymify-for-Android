@@ -114,7 +114,7 @@ public class ExerciseActivity extends Activity {
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
-						displayAddExerciseDialog(new Exercise.ExerciseType(Exercise.ExerciseType.MuscleGroup.CHEST));
+						displayAddExerciseDialog("WEIGHT");
 					}
 				});
 
@@ -123,7 +123,7 @@ public class ExerciseActivity extends Activity {
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
-						displayAddExerciseDialog(new Exercise.ExerciseType(Exercise.ExerciseType.CardioGroup.RUN));
+						displayAddExerciseDialog("CARDIO");
 					}
 				});
 		AlertDialog dialog = builder.create();
@@ -132,8 +132,8 @@ public class ExerciseActivity extends Activity {
 	}
 
 	//need view parameter to allow onclick for FAB (add button)
-	public void displayAddExerciseDialog(Exercise.ExerciseType type){
-		final Exercise.ExerciseType eType = type;
+	public void displayAddExerciseDialog(String type){
+		final String eType = type;
 
 		// set up layout
 		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -149,21 +149,21 @@ public class ExerciseActivity extends Activity {
 
 		//set up spinner
 		ArrayAdapter<String>spinnerAdapter = null;
-		if(type.getType().equals("WEIGHT")){
+		if(eType.equals("WEIGHT")){
 			//set up labels for WEIGHT
 			activityLbl.setText("Muscle Group");
 			goalLbl.setText("Default Number\nof Sets");
 			spinnerAdapter = new ArrayAdapter<String>(this,
-					android.R.layout.simple_spinner_item, Exercise.ExerciseType.mgroups);
+					android.R.layout.simple_spinner_item, Exercise.mgroups);
 			spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			typeSpinner.setAdapter(spinnerAdapter);
 		}
-		else if(type.getType().equals("CARDIO")){
+		else if(eType.equals("CARDIO")){
 			//set up labels for CARDIO
 			activityLbl.setText("Activity");
 			goalLbl.setText("Goal (Distance)");
 			spinnerAdapter = new ArrayAdapter<String>(this,
-					android.R.layout.simple_spinner_item, Exercise.ExerciseType.cgroups);
+					android.R.layout.simple_spinner_item, Exercise.cgroups);
 			spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			typeSpinner.setAdapter(spinnerAdapter);
 		}
@@ -186,7 +186,7 @@ public class ExerciseActivity extends Activity {
 					long arg3) {
 				//TODO: Needs doing properly - get the selected exercise from the autocomplete box and fill in the form details based on the exercises current details
 				selected = (Exercise)pView.getAdapter().getItem(pos);
-				typeSpinner.setSelection(((ArrayAdapter<String>)typeSpinner.getAdapter()).getPosition(selected.getExerciseType().getGroupString()));
+				typeSpinner.setSelection(((ArrayAdapter<String>)typeSpinner.getAdapter()).getPosition(selected.getExerciseArea()));
 				goalBox.setText(String.valueOf(selected.getNoSets()));
 				if(!selected.getDescription().isEmpty()){
 					descBox.setText(selected.getDescription());
@@ -207,11 +207,25 @@ public class ExerciseActivity extends Activity {
 				if(!nameBox.getText().toString().isEmpty()){
 					//check if the exercise is a premade one (has been selected using the autocomplete feature OR whether it must be created from scratch
 					if(selected == null){
-						selected = new Exercise(nameBox.getText().toString(), eType/*TODO:get exercise type properly. Exercise.MuscleGroup.values()[mgroupSpinner.getSelectedItemPosition()]*/,
-							descBox.getText().toString(), Integer.parseInt(goalBox.getText().toString()));
-						if(goalBox.getText().toString().isEmpty()){
-							selected.setNoSets(3);
+						//new exercise
+						if(eType.equals("CARDIO")){
+							//create a CARDIO style exercise
+							selected = new Exercise(nameBox.getText().toString(), Exercise.cgroups[typeSpinner.getSelectedItemPosition()],
+									descBox.getText().toString(), Double.parseDouble(goalBox.getText().toString()));
+
+							if(goalBox.getText().toString().isEmpty()){
+								selected.setDistanceGoal(10.0);
+							}
 						}
+						else{
+							//create a WEIGHT style exercise
+							selected = new Exercise(nameBox.getText().toString(), Exercise.mgroups[typeSpinner.getSelectedItemPosition()],
+									descBox.getText().toString(), Integer.parseInt(goalBox.getText().toString()));
+							if(goalBox.getText().toString().isEmpty()){
+								selected.setNoSets(3);
+							}
+						}
+
 						int id = (int)db.createExercise(selected, new long[]{});
 						
 						selected.setId(id);

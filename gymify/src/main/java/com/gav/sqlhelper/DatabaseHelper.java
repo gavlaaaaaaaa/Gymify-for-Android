@@ -35,14 +35,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String KEY_CREATE_TIME = "create_time";
 	private static final String KEY_REPS = "noReps";
 	private static final String KEY_WEIGHT = "weight";
+	private static final String KEY_DISTANCE = "distance";
+	private static final String KEY_TIMESPENT = "timestamp";
+	private static final String KEY_SET_TYPE = "set_type";
 	
 	//DAY table column names
 	private static final String KEY_WEEKDAY = "weekday";
 	
 	//EXERCISE Table column names
 	private static final String KEY_EXTYPE = "ex_type";
+	private static final String KEY_EXAREA = "ex_area";
 	private static final String KEY_DESC = "description";
 	private static final String KEY_NO_SETS = "no_sets";
+	private static final String KEY_DISTANCE_GOAL = "distance_goal";
 	
 	//DAY_EXERCISES Table column names
 	private static final String KEY_DAY_ID = "day_id";
@@ -56,14 +61,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//Set Table
 	private static final String CREATE_TABLE_SET = "CREATE TABLE IF NOT EXISTS "
             + TABLE_SET + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CREATE_TIME
-            + " TEXT," + KEY_REPS + " INTEGER," + KEY_WEIGHT
-            + " DOUBLE" + ")";
+            + " TEXT," + KEY_REPS + " INTEGER," + KEY_WEIGHT + " REAL,"
+            + KEY_DISTANCE + " DOUBLE," + KEY_TIMESPENT + " TEXT " + ")";
 	
 	//Exercise Table
 	private static final String CREATE_TABLE_EXERCISE = "CREATE TABLE "
             + TABLE_EXERCISE + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME
-            + " TEXT," + KEY_EXTYPE + " TEXT," + KEY_DESC
-            + " TEXT, " + KEY_NO_SETS + " TEXT" + ")";
+            + " TEXT," + KEY_EXTYPE + " TEXT," + KEY_EXAREA + " TEXT," + KEY_DESC
+            + " TEXT, " + KEY_NO_SETS + " TEXT," + KEY_DISTANCE_GOAL + " REAL" + ")";
 	
 	//Day Table
 	private static final String CREATE_TABLE_DAY = "CREATE TABLE "
@@ -237,9 +242,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		ContentValues values = new ContentValues();
 		values.put(KEY_NAME, exercise.getName());
-		values.put(KEY_EXTYPE, exercise.getExerciseType().getJson());
+		values.put(KEY_EXTYPE, exercise.getExerciseType());
+		values.put(KEY_EXAREA, exercise.getExerciseArea());
 		values.put(KEY_DESC, exercise.getDescription());
 		values.put(KEY_NO_SETS, exercise.getNoSets());
+		values.put(KEY_DISTANCE_GOAL, exercise.getDistanceGoal());
 		//insert day row into db
 		long ex_id = db.insert(TABLE_EXERCISE, null, values);
 		
@@ -267,9 +274,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		Exercise ex = new Exercise();
 		ex.setId(c.getInt(c.getColumnIndex(KEY_ID)));
 		ex.setName(c.getString(c.getColumnIndex(KEY_NAME)));
-		ex.setExerciseType(gson.fromJson(c.getString(c.getColumnIndex(KEY_EXTYPE)), Exercise.ExerciseType.class));
+		ex.setExerciseType(c.getString(c.getColumnIndex(KEY_EXTYPE)));
+		ex.setExerciseArea(c.getString(c.getColumnIndex(KEY_EXAREA)));
 		ex.setDescription(c.getString(c.getColumnIndex(KEY_DESC)));
 		ex.setNoSets(Integer.parseInt(c.getString(c.getColumnIndex(KEY_NO_SETS))));
+		ex.setDistanceGoal(Double.parseDouble(c.getString(c.getColumnIndex(KEY_DISTANCE_GOAL))));
 		c.close();
 		return ex;
 	}
@@ -289,9 +298,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				Exercise ex = new Exercise();
 				ex.setId(c.getInt(c.getColumnIndex(KEY_ID)));
 				ex.setName(c.getString(c.getColumnIndex(KEY_NAME)));
-				ex.setExerciseType(gson.fromJson(c.getString(c.getColumnIndex(KEY_EXTYPE)), Exercise.ExerciseType.class));
+				ex.setExerciseType(c.getString(c.getColumnIndex(KEY_EXTYPE)));
+				ex.setExerciseArea(c.getString(c.getColumnIndex(KEY_EXAREA)));
 				ex.setDescription(c.getString(c.getColumnIndex(KEY_DESC)));
 				ex.setNoSets(Integer.parseInt(c.getString(c.getColumnIndex(KEY_NO_SETS))));
+				ex.setDistanceGoal(Double.parseDouble(c.getString(c.getColumnIndex(KEY_DISTANCE_GOAL))));
 				exercises.add(ex);
 			} while (c.moveToNext());
 		}
@@ -325,9 +336,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		ContentValues values = new ContentValues();
 		values.put(KEY_NAME, ex.getName());
-		values.put(KEY_EXTYPE, ex.getExerciseType().getJson());
+		values.put(KEY_EXTYPE, ex.getExerciseType());
+		values.put(KEY_EXAREA, ex.getExerciseArea());
 		values.put(KEY_DESC, ex.getDescription());
 		values.put(KEY_NO_SETS, ex.getNoSets());
+		values.put(KEY_DISTANCE_GOAL, ex.getDistanceGoal());
 		
 		return db.update(TABLE_EXERCISE, values, KEY_ID + " = ?", new String[] { String.valueOf(ex.getId()) } );
 	}
@@ -368,6 +381,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		values.put(KEY_CREATE_TIME, set.getCreate_time());
 		values.put(KEY_WEIGHT, set.getWeight());
 		values.put(KEY_REPS, set.getNoReps());
+		values.put(KEY_SET_TYPE, set.getType());
+		values.put(KEY_DISTANCE, set.getDistance());
+		values.put(KEY_TIMESPENT, set.getTimespent());
 		//insert day row into db
 		long set_id = db.insert(TABLE_SET, null, values);
 		
@@ -392,6 +408,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		set.setCreate_time(c.getString(c.getColumnIndex(KEY_CREATE_TIME)));
 		set.setWeight(Double.parseDouble(c.getString(c.getColumnIndex(KEY_WEIGHT))));
 		set.setNoReps(Integer.parseInt(c.getString(c.getColumnIndex(KEY_REPS))));
+		set.setType(c.getString(c.getColumnIndex(KEY_SET_TYPE)));
+		set.setDistance(Double.parseDouble(c.getString(c.getColumnIndex(KEY_DISTANCE))));
+		set.setTimespent(c.getString(c.getColumnIndex(KEY_TIMESPENT)));
 		c.close();
 		return set;
 	}
@@ -412,6 +431,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				set.setCreate_time(c.getString(c.getColumnIndex(KEY_CREATE_TIME)));
 				set.setWeight(Double.parseDouble(c.getString(c.getColumnIndex(KEY_WEIGHT))));
 				set.setNoReps(Integer.parseInt(c.getString(c.getColumnIndex(KEY_REPS))));
+				set.setType(c.getString(c.getColumnIndex(KEY_SET_TYPE)));
+				set.setDistance(Double.parseDouble(c.getString(c.getColumnIndex(KEY_DISTANCE))));
+				set.setTimespent(c.getString(c.getColumnIndex(KEY_TIMESPENT)));
 				
 				sets.add(set);
 			} while (c.moveToNext());
@@ -450,6 +472,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		values.put(KEY_CREATE_TIME, set.getCreate_time());
 		values.put(KEY_WEIGHT, set.getWeight());
 		values.put(KEY_REPS, set.getNoReps());
+		values.put(KEY_SET_TYPE, set.getType());
+		values.put(KEY_DISTANCE, set.getDistance());
+		values.put(KEY_TIMESPENT, set.getTimespent());
 		
 		return db.update(TABLE_SET, values, KEY_ID + " = ?", new String[] { String.valueOf(set.getId()) } );
 	}

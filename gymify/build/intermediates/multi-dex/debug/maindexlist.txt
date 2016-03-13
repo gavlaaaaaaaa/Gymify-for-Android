@@ -11,7 +11,6 @@ com/gav/gymify/MainActivity$PlaceholderFragment.class
 com/gav/gymify/ExerciseActivity$2.class
 com/gav/gymify/ExerciseActivity$8.class
 com/google/gson/JsonNull.class
-com/gav/sqlmodel/Exercise$ExerciseType.class
 com/gav/gymify/SetActivity$2.class
 com/gav/gymify/ExerciseActivity$4.class
 com/gav/gymify/R.class

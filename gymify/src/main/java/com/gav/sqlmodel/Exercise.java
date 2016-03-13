@@ -4,117 +4,61 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Exercise {
 
-	public static class ExerciseType implements Serializable {
-		private String type;
-		private MuscleGroup mgroup;
-		private CardioGroup cgroup;
-
-		public static String [] mgroups = {"Chest", "Biceps", "Triceps", "Back", "Shoulders", "Abs", "Legs"};
-		public static String [] cgroups = {"Run", "Cycle", "Row"};
-		Gson gson = new Gson();
-
-
-		public ExerciseType(){}
-		public ExerciseType(MuscleGroup group){
-			this.type = "WEIGHT";
-			this.mgroup = group;
-		}
-		public ExerciseType(CardioGroup group){
-			this.type = "CARDIO";
-			this.cgroup= group;
-		}
-
-		public enum MuscleGroup {
-			CHEST(0), BICEP(1), TRICEP(2), BACK(3), SHOULDER(4), ABS(5), LEG(6);
-			private final int mask;
-
-			private MuscleGroup(int mask) {
-				this.mask = mask;
-			}
-
-			public int getMask() {
-				return mask;
-			}
-		}
-
-		public enum CardioGroup {
-			RUN(0), CYCLE(1), ROW(2);
-			private final int mask;
-
-			private CardioGroup(int mask) {
-				this.mask = mask;
-			}
-
-			public int getMask() {
-				return mask;
-			}
-		}
-
-		public String getType(){return this.type; }
-
-		public String getJson(){
-			return new String(gson.toJson(this));
-		}
-
-		public int getGroup(){
-			if (this.type.equals("WEIGHT")){
-				return this.mgroup.getMask();
-			}
-			else if(this.type.equals("CARDIO") ){
-				return this.cgroup.getMask();
-			}
-			else{
-				return 0;
-			}
-
-		}
-
-		public String getGroupString(){
-			if (this.type.equals("WEIGHT")){
-				return mgroups[this.mgroup.getMask()];
-			}
-			else if(this.type.equals("CARDIO") ){
-				return cgroups[this.cgroup.getMask()];
-			}
-			else{
-				return "";
-			}
-		}
-	}
-
-	
-
 
 	private int id;
 	private String name;
-	private ExerciseType exerciseType;
+	private String exerciseType;
+	private String exerciseArea;
 	private String description;
 	private int noSets;
+	private double distanceGoal;
 	private List<Set> sets;
 	private List<Set> lastSets;
-	
+
+	public static String [] mgroups = {"Chest", "Biceps", "Triceps", "Back", "Shoulders", "Abs", "Legs"};
+	public static String [] cgroups = {"Run", "Cycle", "Row"};
 	
 	public Exercise(){
-		id = 0; name = ""; exerciseType=new ExerciseType(); description = "";
+		id = 0; name = ""; exerciseType=""; description = "";
 	}
 	
-	public Exercise(int id, String name, ExerciseType type, String description, int noSets) {
+	public Exercise(int id, String name, String exerciseArea, String description, int noSets) {
 		this.id = id;
 		this.name = name;
-		this.exerciseType = type;
+		this.exerciseType = "WEIGHT";
 		this.description = description;
+		this.exerciseArea = exerciseArea;
 		this.noSets = noSets;
 	}
 	
-	public Exercise(String name, ExerciseType type, String description, int noSets) {
+	public Exercise(String name, String exerciseArea, String description, int noSets) {
 		this.name = name;
-		this.exerciseType = type;
+		this.exerciseType = "WEIGHT";
 		this.description = description;
+		this.exerciseArea = exerciseArea;
 		this.noSets = noSets;
+	}
+
+	public Exercise(int id, String name, String exerciseArea, String description, double distanceGoal) {
+		this.id = id;
+		this.name = name;
+		this.exerciseType = "CARDIO";
+		this.description = description;
+		this.exerciseArea = exerciseArea;
+		this.distanceGoal = distanceGoal;
+	}
+
+	public Exercise(String name, String exerciseArea, String description, double distanceGoal) {
+		this.name = name;
+		this.exerciseType = "CARDIO";
+		this.description = description;
+		this.exerciseArea = exerciseArea;
+		this.distanceGoal = distanceGoal;
 	}
 
 	public int getId() {
@@ -133,12 +77,20 @@ public class Exercise {
 		this.name = name;
 	}
 
-	public ExerciseType getExerciseType() {
+	public String getExerciseType() {
 		return exerciseType;
 	}
 
-	public void setExerciseType(ExerciseType type) {
+	public void setExerciseType(String type) {
 		this.exerciseType = type;
+	}
+
+	public String getExerciseArea() {
+		return exerciseArea;
+	}
+
+	public void setExerciseArea(String exerciseArea) {
+		this.exerciseArea = exerciseArea;
 	}
 
 	public String getDescription() {
@@ -163,6 +115,14 @@ public class Exercise {
 	
 	public void removeSet(Set s){
 		sets.remove(s);
+	}
+
+	public double getDistanceGoal() {
+		return distanceGoal;
+	}
+
+	public void setDistanceGoal(double distanceGoal) {
+		this.distanceGoal = distanceGoal;
 	}
 	
 	public List<Set> getSets(){
