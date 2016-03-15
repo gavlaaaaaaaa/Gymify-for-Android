@@ -8,6 +8,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -162,6 +163,8 @@ public class ExerciseActivity extends Activity {
 			//set up labels for CARDIO
 			activityLbl.setText("Activity");
 			goalLbl.setText("Goal (Distance)");
+			//change input box to allow decimal numbers
+			goalBox.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 			spinnerAdapter = new ArrayAdapter<String>(this,
 					android.R.layout.simple_spinner_item, Exercise.cgroups);
 			spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
