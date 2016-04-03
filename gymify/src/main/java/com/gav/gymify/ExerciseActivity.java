@@ -163,6 +163,8 @@ public class ExerciseActivity extends Activity {
 			//set up labels for CARDIO
 			activityLbl.setText("Activity");
 			goalLbl.setText("Goal (Distance)");
+			nameBox.setHint("e.g. Treadmill");
+			goalBox.setHint("20");
 			//change input box to allow decimal numbers
 			goalBox.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 			spinnerAdapter = new ArrayAdapter<String>(this,

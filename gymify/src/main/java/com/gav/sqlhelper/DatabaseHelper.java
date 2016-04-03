@@ -62,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String CREATE_TABLE_SET = "CREATE TABLE IF NOT EXISTS "
             + TABLE_SET + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CREATE_TIME
             + " TEXT," + KEY_REPS + " INTEGER," + KEY_WEIGHT + " REAL,"
-            + KEY_DISTANCE + " DOUBLE," + KEY_TIMESPENT + " TEXT " + ")";
+            + KEY_DISTANCE + " DOUBLE," + KEY_TIMESPENT + " TEXT, " + KEY_SET_TYPE + " TEXT " + ")";
 	
 	//Exercise Table
 	private static final String CREATE_TABLE_EXERCISE = "CREATE TABLE "

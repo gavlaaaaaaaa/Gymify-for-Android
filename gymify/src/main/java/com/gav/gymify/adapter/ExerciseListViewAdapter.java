@@ -26,7 +26,7 @@ public class ExerciseListViewAdapter extends ListViewAdapter<Exercise>{
         TextView name;
         TextView mgroup;
     }
- 
+
     public View getView(int position, View view, ViewGroup parent) {
 
         final ViewHolder holder;
@@ -43,7 +43,7 @@ public class ExerciseListViewAdapter extends ListViewAdapter<Exercise>{
         // Capture position and set to the TextViews
         holder.name.setText(((Exercise) list.get(position)).getName());
         holder.mgroup.setText(((Exercise) list.get(position)).getExerciseArea());
-        
+
         return view;
     }
     

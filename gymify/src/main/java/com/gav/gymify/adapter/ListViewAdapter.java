@@ -27,14 +27,11 @@ public abstract class ListViewAdapter<T> extends ArrayAdapter<T>{
     }
     
     public abstract View getView(int position, View view, ViewGroup parent);
-    
+
+
     public void remove(T object) {
         list.remove(object);
         notifyDataSetChanged();
-    }
- 
-    public List<T> getDays() {
-        return list;
     }
  
     public void toggleSelection(int position) {
@@ -65,7 +62,7 @@ public abstract class ListViewAdapter<T> extends ArrayAdapter<T>{
     public SparseBooleanArray getSelectedIds() {
         return mSelectedItemsIds;
     }
-    
+
     
 
     

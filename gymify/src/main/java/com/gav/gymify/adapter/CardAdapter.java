@@ -78,7 +78,7 @@ public class CardAdapter extends ListViewAdapter<Set>{
 					if(!holder.weight.getText().toString().isEmpty() ){//&& !holder.reps.getText().toString().isEmpty()){
 						Time now = new Time();
 						now.setToNow();
-						Set s = new Set(now.format("%H:%M - %m-%d-%Y"), 0, Double.valueOf(holder.weight.getText().toString()));
+						Set s = new Set(now.format("%H:%M - %m-%d-%Y"), Integer.valueOf(holder.reps.getText().toString()), Double.valueOf(holder.weight.getText().toString()));
 						int id = (int)db.createSet(s);
 						s.setId(id);
 						db.createExerciseSet(ex_id, id);

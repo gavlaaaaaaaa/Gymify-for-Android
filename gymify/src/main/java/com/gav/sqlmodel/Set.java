@@ -86,7 +86,10 @@ public class Set {
 	}
 
 	public String getTimespent() {
-		return timespent.toString();
+		if (timespent != null)
+			return timespent.toString();
+		else
+			return "00:00:00";
 	}
 
 	public void setTimespent(String timespent) {
