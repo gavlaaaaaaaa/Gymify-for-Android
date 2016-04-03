@@ -147,7 +147,8 @@ public class ExerciseActivity extends Activity {
 		final EditText descBox = (EditText) layout.findViewById(R.id.desc_edit);
 		final EditText goalBox = (EditText) layout.findViewById(R.id.goal_edit);
 		final Spinner typeSpinner = (Spinner) layout.findViewById(R.id.type_spinner);
-
+		//Initialize exercise array for auto complete
+		final ArrayList<Exercise> exercises;
 		//set up spinner
 		ArrayAdapter<String>spinnerAdapter = null;
 		if(eType.equals("WEIGHT")){
@@ -158,6 +159,8 @@ public class ExerciseActivity extends Activity {
 					android.R.layout.simple_spinner_item, Exercise.mgroups);
 			spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			typeSpinner.setAdapter(spinnerAdapter);
+			//Auto complete array for Weight exercises only
+			exercises = (ArrayList<Exercise>)db.getAllWeightExercises();
 		}
 		else if(eType.equals("CARDIO")){
 			//set up labels for CARDIO
@@ -171,15 +174,14 @@ public class ExerciseActivity extends Activity {
 					android.R.layout.simple_spinner_item, Exercise.cgroups);
 			spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			typeSpinner.setAdapter(spinnerAdapter);
+			//Auto complete array for Cardio exercises only
+			exercises = (ArrayList<Exercise>)db.getAllCardioExercises();
 		}
 		else{
 			//invalid type - somethings gone wrong - shouldnt reach here
 			return;
 		}
 
-		
-		//Initialize exercise array for auto complete
-		final ArrayList<Exercise> exercises = (ArrayList<Exercise>)db.getAllExercises();
 		ArrayAdapter<Exercise> nameAdapter = new ArrayAdapter<Exercise>(this, android.R.layout.simple_list_item_1, exercises);
 		nameBox.setAdapter(nameAdapter);
 		

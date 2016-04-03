@@ -309,6 +309,57 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		c.close();
 		return exercises;
 	}
+
+	//get all weight exercises
+	public List<Exercise> getAllWeightExercises() {
+		List<Exercise> exercises = new ArrayList<Exercise>();
+		String selectQuery = "SELECT * FROM " + TABLE_EXERCISE + " WHERE " + KEY_EXTYPE + " = 'WEIGHT'";
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		//iterate through days and add them to days list
+		if(c.moveToFirst()){
+			do {
+				Exercise ex = new Exercise();
+				ex.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+				ex.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+				ex.setExerciseType(c.getString(c.getColumnIndex(KEY_EXTYPE)));
+				ex.setExerciseArea(c.getString(c.getColumnIndex(KEY_EXAREA)));
+				ex.setDescription(c.getString(c.getColumnIndex(KEY_DESC)));
+				ex.setNoSets(Integer.parseInt(c.getString(c.getColumnIndex(KEY_NO_SETS))));
+				ex.setDistanceGoal(Double.parseDouble(c.getString(c.getColumnIndex(KEY_DISTANCE_GOAL))));
+				exercises.add(ex);
+			} while (c.moveToNext());
+		}
+		c.close();
+		return exercises;
+	}
+
+	public List<Exercise> getAllCardioExercises() {
+		List<Exercise> exercises = new ArrayList<Exercise>();
+		String selectQuery = "SELECT * FROM " + TABLE_EXERCISE + " WHERE " + KEY_EXTYPE + " = 'CARDIO'";
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		//iterate through days and add them to days list
+		if(c.moveToFirst()){
+			do {
+				Exercise ex = new Exercise();
+				ex.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+				ex.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+				ex.setExerciseType(c.getString(c.getColumnIndex(KEY_EXTYPE)));
+				ex.setExerciseArea(c.getString(c.getColumnIndex(KEY_EXAREA)));
+				ex.setDescription(c.getString(c.getColumnIndex(KEY_DESC)));
+				ex.setNoSets(Integer.parseInt(c.getString(c.getColumnIndex(KEY_NO_SETS))));
+				ex.setDistanceGoal(Double.parseDouble(c.getString(c.getColumnIndex(KEY_DISTANCE_GOAL))));
+				exercises.add(ex);
+			} while (c.moveToNext());
+		}
+		c.close();
+		return exercises;
+	}
 	
 	//get exercise by day
 	public List<Exercise> getExercisesByDay(long day_id){
