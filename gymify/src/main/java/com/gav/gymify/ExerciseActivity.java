@@ -191,7 +191,6 @@ public class ExerciseActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> pView, View view, int pos,
 					long arg3) {
-				//TODO: Needs doing properly - get the selected exercise from the autocomplete box and fill in the form details based on the exercises current details
 				selected = (Exercise)pView.getAdapter().getItem(pos);
 				typeSpinner.setSelection(((ArrayAdapter<String>)typeSpinner.getAdapter()).getPosition(selected.getExerciseArea()));
 				goalBox.setText(String.valueOf(selected.getNoSets()));
