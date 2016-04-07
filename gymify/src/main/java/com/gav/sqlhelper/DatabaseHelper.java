@@ -512,9 +512,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		c.close();
 		return sets;
 	}
-	
-	
-	
+
 	//update set
 	public int updateSet(Set set){
 		SQLiteDatabase db = this.getWritableDatabase();

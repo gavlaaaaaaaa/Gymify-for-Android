@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
 		case R.id.action_delete:
 			return true;		
 		case R.id.action_report:
-			Intent intent = new Intent(MainActivity.this, ReportTabActivity.class);
+			Intent intent = new Intent(MainActivity.this, CardioActivity.class);
 			startActivity(intent);
 			return true;
 		}

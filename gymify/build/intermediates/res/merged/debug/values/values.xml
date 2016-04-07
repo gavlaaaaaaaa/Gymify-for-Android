@@ -9,6 +9,7 @@
     <string name="action_settings">Settings</string>
     <string name="app_name">Gymify</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_cardio">CardioActivity</string>
     <string name="title_activity_exercise">ExerciseActivity</string>
     <string name="title_activity_report">ReportActivity</string>
     <string name="title_activity_report_tab">ReportTabActivity</string>

@@ -32,6 +32,10 @@
     <init>();
 }
 
+-keep class com.gav.gymify.CardioActivity {
+    <init>();
+}
+
 -keep public class * extends android.app.backup.BackupAgent {
     <init>();
 }

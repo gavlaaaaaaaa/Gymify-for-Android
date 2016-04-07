@@ -43,8 +43,10 @@ com/gav/sqlhelper/DatabaseHelper.class
 -keep class com.gav.gymify.MainActivity { <init>(); }
 com/gav/gymify/R$menu.class
 com/gav/gymify/adapter/ExerciseListViewAdapter.class
+-keep class com.gav.gymify.CardioActivity { <init>(); }
 com/gav/gymify/ExerciseActivity$6.class
 com/gav/gymify/adapter/CardAdapter.class
+com/gav/gymify/CardioActivity.class
 com/google/gson/reflect/TypeToken.class
 com/google/gson/annotations/SerializedName.class
 com/google/gson/annotations/Since.class
