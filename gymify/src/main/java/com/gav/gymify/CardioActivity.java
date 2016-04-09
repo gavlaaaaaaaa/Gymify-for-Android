@@ -1,20 +1,31 @@
 package com.gav.gymify;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.SystemClock;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
+import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class CardioActivity extends Activity implements SensorEventListener {
+public class CardioActivity extends Activity implements SensorEventListener, View.OnClickListener{
 
 
     private SensorManager mSensorManager;
     private Sensor mStepDetectorSensor;
     private TextView detectorTV;
+    private Chronometer chronometer;
+    private RelativeLayout circleLayout;
+    private long steps = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +33,14 @@ public class CardioActivity extends Activity implements SensorEventListener {
         setContentView(R.layout.activity_cardio);
 
         detectorTV = (TextView)findViewById(R.id.detector);
+        chronometer = (Chronometer) findViewById(R.id.chronometer);
+        //circleLayout = (RelativeLayout) findViewById(R.id.circleLayout);
+        findViewById(R.id.startBtn).setOnClickListener(this);
+        findViewById(R.id.stopBtn).setOnClickListener(this);
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mStepDetectorSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+
     }
 
 
@@ -40,8 +56,8 @@ public class CardioActivity extends Activity implements SensorEventListener {
 
 
         if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
-            // For test only. Only allowed value is 1.0 i.e. for step taken
-            detectorTV.setText("Step Detector Detected : " + value);
+            steps++;
+            detectorTV.setText("Steps\n" + steps);
         }
     }
 
@@ -63,5 +79,18 @@ public class CardioActivity extends Activity implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.startBtn:
+                chronometer.setBase(SystemClock.elapsedRealtime());
+                chronometer.start();
+                break;
+            case R.id.stopBtn:
+                chronometer.stop();
+                break;
+        }
     }
 }

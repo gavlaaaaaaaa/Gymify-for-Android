@@ -15,9 +15,6 @@
     <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature
-        android:name="=android.hardware.sensor.stepcounter"
-        android:required="false" />
-    <uses-feature
         android:name="=android.hardware.sensor.stepdetector"
         android:required="false" />
 
