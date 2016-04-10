@@ -1,5 +1,7 @@
 package com.gav.gymify;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,11 +27,14 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
     private Sensor mStepDetectorSensor;
     private TextView detectorTV;
     private Chronometer chronometer;
-    private RelativeLayout circleLayout;
+    private TextView circleLayout;
     private long steps = 0;
     private long exerciseTime = 0;
-    private  AlertDialog.Builder finishDialogBuilder;
+    private AlertDialog.Builder finishDialogBuilder;
     private AlertDialog finishDialog;
+    private ObjectAnimator growAnimX;
+    private ObjectAnimator growAnimY;
+    private AnimatorSet scaleCircle = new AnimatorSet();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +43,7 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
 
         detectorTV = (TextView)findViewById(R.id.detector);
         chronometer = (Chronometer) findViewById(R.id.chronometer);
-        //circleLayout = (RelativeLayout) findViewById(R.id.circleLayout);
+        circleLayout = (TextView) findViewById(R.id.detector);
         findViewById(R.id.startBtn).setOnClickListener(this);
         findViewById(R.id.pauseBtn).setOnClickListener(this);
         findViewById(R.id.finishBtn).setOnClickListener(this);
@@ -68,6 +73,12 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
                 });
 
         finishDialog = finishDialogBuilder.create();
+
+        growAnimX = ObjectAnimator.ofFloat(circleLayout, "scaleX", 1.1f);
+        growAnimY = ObjectAnimator.ofFloat(circleLayout, "scaleY", 1.1f);
+        growAnimX.setDuration(900);
+        growAnimY.setDuration(900);
+        scaleCircle.play(growAnimX).with(growAnimY);
     }
 
 
@@ -84,7 +95,9 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
 
         if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             steps++;
+            scaleCircle.start();
             detectorTV.setText("Steps\n" + steps);
+            //scaleCircle.end();
         }
     }
 
