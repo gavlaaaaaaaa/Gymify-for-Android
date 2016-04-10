@@ -6,18 +6,21 @@
     android:rowCount="3"
     tools:context="com.gav.gymify.CardioActivity"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#006699">
 
     <Chronometer
         android:id="@+id/chronometer"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:format="%s"
         android:textSize="30sp"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_row="0"
-        android:layout_margin="10dp"/>
+        android:layout_marginTop="10dp"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white"/>
 
     <!--<RelativeLayout
         android:id="@+id/circleLayout"
@@ -30,8 +33,9 @@
             android:id="@+id/detector"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="30dp"
             android:textSize="50sp"
+            android:text="Steps\n0"
             android:layout_gravity="center"
             android:gravity="center"
             android:background="@drawable/circle"/>
@@ -49,15 +53,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             android:text="START"/>
         <Button
-            android:id="@+id/stopBtn"
+            android:id="@+id/pauseBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:layout_marginLeft="10dp"
-            android:text="STOP"/>
+            android:layout_marginLeft="5dp"
+            android:text="PAUSE"/>
+        <Button
+            android:id="@+id/finishBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginLeft="5dp"
+            android:text="FINISH"/>
     </LinearLayout>
 
 

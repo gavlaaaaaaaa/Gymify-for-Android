@@ -1,5 +1,6 @@
 package com.gav.gymify;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.hardware.Sensor;
@@ -26,6 +27,9 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
     private Chronometer chronometer;
     private RelativeLayout circleLayout;
     private long steps = 0;
+    private long exerciseTime = 0;
+    private  AlertDialog.Builder finishDialogBuilder;
+    private AlertDialog finishDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +40,34 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
         chronometer = (Chronometer) findViewById(R.id.chronometer);
         //circleLayout = (RelativeLayout) findViewById(R.id.circleLayout);
         findViewById(R.id.startBtn).setOnClickListener(this);
-        findViewById(R.id.stopBtn).setOnClickListener(this);
+        findViewById(R.id.pauseBtn).setOnClickListener(this);
+        findViewById(R.id.finishBtn).setOnClickListener(this);
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mStepDetectorSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
 
+        finishDialogBuilder = new AlertDialog.Builder(this);
+        finishDialogBuilder.setMessage("Finish Exercise?");
+        finishDialogBuilder.setCancelable(true);
+
+        finishDialogBuilder.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        CardioActivity.super.onBackPressed();
+                    }
+                });
+
+        finishDialogBuilder.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        finishDialog = finishDialogBuilder.create();
     }
 
 
@@ -85,12 +112,20 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.startBtn:
-                chronometer.setBase(SystemClock.elapsedRealtime());
+                chronometer.setBase(SystemClock.elapsedRealtime() + exerciseTime);
                 chronometer.start();
                 break;
-            case R.id.stopBtn:
+            case R.id.pauseBtn:
+                exerciseTime = chronometer.getBase() - SystemClock.elapsedRealtime();
                 chronometer.stop();
                 break;
+            case R.id.finishBtn:
+                finishDialog.show();
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        finishDialog.show();
     }
 }
