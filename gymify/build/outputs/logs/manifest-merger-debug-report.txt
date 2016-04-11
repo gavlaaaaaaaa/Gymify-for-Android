@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:2:1-56:12
+ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:2:1-57:12
 	package
 		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:3:5-29
 		INJECTED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml
@@ -47,7 +47,7 @@ ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManife
 	android:name
 		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:16:19-71
 application
-ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:18:5-54:19
+ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:18:5-55:19
 	android:label
 		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:21:9-41
 	android:allowBackup
@@ -107,10 +107,12 @@ ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManife
 	android:name
 		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:47:17-63
 activity#com.gav.gymify.CardioActivity
-ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:50:9-53:61
+ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:50:9-54:61
 	android:screenOrientation
-		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:53:13-49
+		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:54:13-49
 	android:label
 		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:52:13-58
+	android:parentActivityName
+		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:53:13-59
 	android:name
 		ADDED from /Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/AndroidManifest.xml:51:13-43

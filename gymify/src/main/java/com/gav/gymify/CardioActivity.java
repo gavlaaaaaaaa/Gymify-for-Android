@@ -12,6 +12,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.SystemClock;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -19,6 +20,9 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.gav.sqlhelper.DatabaseHelper;
+import com.gav.sqlmodel.Exercise;
 
 public class CardioActivity extends Activity implements SensorEventListener, View.OnClickListener{
 
@@ -35,6 +39,10 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
     private ObjectAnimator growAnimX;
     private ObjectAnimator growAnimY;
     private AnimatorSet scaleCircle = new AnimatorSet();
+    private Exercise currExercise;
+    private Exercise next_exercise;
+    private DatabaseHelper db;
+    private int exercise_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +67,10 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        //TODO: store results here
                         dialog.cancel();
                         CardioActivity.super.onBackPressed();
+                        CardioActivity.this.overridePendingTransition(R.anim.slide_in_left, android.R.anim.fade_out);
                     }
                 });
 
@@ -79,6 +89,39 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
         growAnimX.setDuration(900);
         growAnimY.setDuration(900);
         scaleCircle.play(growAnimX).with(growAnimY);
+
+        //get a db instance and obtain the current and next exercise
+        db = new DatabaseHelper(getApplicationContext());
+        exercise_id = getIntent().getIntExtra("exercise_id", 0);
+        int id = getIntent().getIntExtra("next_exercise_id", -1);
+        //make sure there is a next exercise - otherwise set it to null
+        if(id >=0){
+            next_exercise = db.getExercise(getIntent().getIntExtra("next_exercise_id", -1));
+        }
+        else{
+            next_exercise = null;
+        }
+        currExercise = db.getExercise(exercise_id);
+
+        //set page title to match current exercise name
+        this.getActionBar().setTitle(currExercise.getName());
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        switch (id) {
+            //when using action bar back button - simulate onBackPressed() for animations
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

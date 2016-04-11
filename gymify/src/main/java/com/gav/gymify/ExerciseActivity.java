@@ -303,8 +303,13 @@ public class ExerciseActivity extends Activity {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position,
 					long id) {
 				Exercise e = (Exercise)listView.getItemAtPosition(position);
-				
-				Intent exerciseIntent = new Intent(ExerciseActivity.this, SetActivity.class);
+				Intent exerciseIntent = null;
+				if(e.getExerciseType().equals("CARDIO")){
+					exerciseIntent = new Intent(ExerciseActivity.this, CardioActivity.class);
+				}
+				else {
+					exerciseIntent = new Intent(ExerciseActivity.this, SetActivity.class);
+				}
 				exerciseIntent.putExtra("exercise_id", e.getId());
 				if(position+1 < adapter.getCount() ){
 					next_exercise = (Exercise)listView.getItemAtPosition(position+1);

@@ -53,6 +53,7 @@
         <activity
             android:name="com.gav.gymify.CardioActivity"
             android:label="@string/title_activity_cardio"
+            android:parentActivityName="com.gav.gymify.ExerciseActivity"
             android:screenOrientation="portrait" />
     </application>
 
