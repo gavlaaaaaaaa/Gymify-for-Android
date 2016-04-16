@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -59,9 +60,41 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mStepDetectorSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
 
+        //get a db instance and obtain the current and next exercise
+        db = new DatabaseHelper(getApplicationContext());
+        exercise_id = getIntent().getIntExtra("exercise_id", 0);
+        int id = getIntent().getIntExtra("next_exercise_id", -1);
+        //make sure there is a next exercise - otherwise set it to null
+        if(id >=0){
+            next_exercise = db.getExercise(getIntent().getIntExtra("next_exercise_id", -1));
+        }
+        else{
+            next_exercise = null;
+        }
+        currExercise = db.getExercise(exercise_id);
+
+        //set page title to match current exercise name
+        this.getActionBar().setTitle(currExercise.getName());
+
         finishDialogBuilder = new AlertDialog.Builder(this);
-        finishDialogBuilder.setMessage("Finish Exercise?");
+
+        finishDialogBuilder.setTitle("Finish Exercise?");
+        if(next_exercise == null){
+            finishDialogBuilder.setMessage("This was your last exercise. Great work!");
+        }
+        else{
+            //TODO: add previous exercise info here
+            finishDialogBuilder.setMessage("Next Exercise is: " + next_exercise.getName());
+        }
         finishDialogBuilder.setCancelable(true);
+        finishDialogBuilder.setNeutralButton("Back", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                CardioActivity.super.onBackPressed();
+                CardioActivity.this.overridePendingTransition(R.anim.slide_in_left, android.R.anim.fade_out);
+
+            }
+        });
 
         finishDialogBuilder.setPositiveButton(
                 "Yes",
@@ -69,8 +102,7 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
                     public void onClick(DialogInterface dialog, int id) {
                         //TODO: store results here
                         dialog.cancel();
-                        CardioActivity.super.onBackPressed();
-                        CardioActivity.this.overridePendingTransition(R.anim.slide_in_left, android.R.anim.fade_out);
+                        end();
                     }
                 });
 
@@ -90,21 +122,7 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
         growAnimY.setDuration(900);
         scaleCircle.play(growAnimX).with(growAnimY);
 
-        //get a db instance and obtain the current and next exercise
-        db = new DatabaseHelper(getApplicationContext());
-        exercise_id = getIntent().getIntExtra("exercise_id", 0);
-        int id = getIntent().getIntExtra("next_exercise_id", -1);
-        //make sure there is a next exercise - otherwise set it to null
-        if(id >=0){
-            next_exercise = db.getExercise(getIntent().getIntExtra("next_exercise_id", -1));
-        }
-        else{
-            next_exercise = null;
-        }
-        currExercise = db.getExercise(exercise_id);
 
-        //set page title to match current exercise name
-        this.getActionBar().setTitle(currExercise.getName());
 
     }
 
@@ -183,5 +201,11 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
     @Override
     public void onBackPressed(){
         finishDialog.show();
+    }
+
+    public void end(){
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
 }
