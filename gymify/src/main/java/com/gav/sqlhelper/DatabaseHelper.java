@@ -33,11 +33,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	//SET Table column names
 	private static final String KEY_CREATE_TIME = "create_time";
-	private static final String KEY_REPS = "noReps";
+	private static final String KEY_REPS = "no_reps";
 	private static final String KEY_WEIGHT = "weight";
 	private static final String KEY_DISTANCE = "distance";
 	private static final String KEY_TIMESPENT = "timestamp";
 	private static final String KEY_SET_TYPE = "set_type";
+	private static final String KEY_STEPS = "no_steps";
 	
 	//DAY table column names
 	private static final String KEY_WEEKDAY = "weekday";
@@ -62,7 +63,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String CREATE_TABLE_SET = "CREATE TABLE IF NOT EXISTS "
             + TABLE_SET + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CREATE_TIME
             + " TEXT," + KEY_REPS + " INTEGER," + KEY_WEIGHT + " REAL,"
-            + KEY_DISTANCE + " DOUBLE," + KEY_TIMESPENT + " TEXT, " + KEY_SET_TYPE + " TEXT " + ")";
+            + KEY_DISTANCE + " REAL," + KEY_TIMESPENT + " REAL, "
+			+ KEY_STEPS + " INTEGER, " + KEY_SET_TYPE + " TEXT " + ")";
 	
 	//Exercise Table
 	private static final String CREATE_TABLE_EXERCISE = "CREATE TABLE "
@@ -435,6 +437,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		values.put(KEY_SET_TYPE, set.getType());
 		values.put(KEY_DISTANCE, set.getDistance());
 		values.put(KEY_TIMESPENT, set.getTimespent());
+		values.put(KEY_STEPS, set.getSteps());
 		//insert day row into db
 		long set_id = db.insert(TABLE_SET, null, values);
 		
@@ -460,8 +463,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		set.setWeight(Double.parseDouble(c.getString(c.getColumnIndex(KEY_WEIGHT))));
 		set.setNoReps(Integer.parseInt(c.getString(c.getColumnIndex(KEY_REPS))));
 		set.setType(c.getString(c.getColumnIndex(KEY_SET_TYPE)));
-		set.setDistance(Double.parseDouble(c.getString(c.getColumnIndex(KEY_DISTANCE))));
-		set.setTimespent(c.getString(c.getColumnIndex(KEY_TIMESPENT)));
+		set.setDistance(Float.parseFloat(c.getString(c.getColumnIndex(KEY_DISTANCE))));
+		set.setTimespent(Long.parseLong(c.getString(c.getColumnIndex(KEY_TIMESPENT))));
+		set.setSteps(c.getInt(c.getColumnIndex(KEY_STEPS)));
 		c.close();
 		return set;
 	}
@@ -483,8 +487,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				set.setWeight(Double.parseDouble(c.getString(c.getColumnIndex(KEY_WEIGHT))));
 				set.setNoReps(Integer.parseInt(c.getString(c.getColumnIndex(KEY_REPS))));
 				set.setType(c.getString(c.getColumnIndex(KEY_SET_TYPE)));
-				set.setDistance(Double.parseDouble(c.getString(c.getColumnIndex(KEY_DISTANCE))));
-				set.setTimespent(c.getString(c.getColumnIndex(KEY_TIMESPENT)));
+				set.setDistance(Float.parseFloat(c.getString(c.getColumnIndex(KEY_DISTANCE))));
+				set.setTimespent(Long.parseLong(c.getString(c.getColumnIndex(KEY_TIMESPENT))));
+				set.setSteps(c.getInt(c.getColumnIndex(KEY_STEPS)));
 				
 				sets.add(set);
 			} while (c.moveToNext());
@@ -513,6 +518,27 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return sets;
 	}
 
+	public Set getLastSetForExercise(long exercise_id){
+		Set set = null;
+		String selectQuery = "SELECT MAX("+KEY_SET_ID+") as "+KEY_SET_ID+" FROM " + TABLE_EXERCISE_SET +" WHERE "
+				+ KEY_EXERCISE_ID + " = '" +exercise_id +"'";
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+		if(c.moveToFirst()){
+			String id = c.getString(c.getColumnIndex(KEY_SET_ID));
+			if(id != null) {
+				Set s = getSet(c.getInt(c.getColumnIndex(KEY_SET_ID)));
+
+				set = s;
+			}
+
+		}
+		c.close();
+
+		return set;
+	}
+
 	//update set
 	public int updateSet(Set set){
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -524,6 +550,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		values.put(KEY_SET_TYPE, set.getType());
 		values.put(KEY_DISTANCE, set.getDistance());
 		values.put(KEY_TIMESPENT, set.getTimespent());
+		values.put(KEY_STEPS, set.getSteps());
 		
 		return db.update(TABLE_SET, values, KEY_ID + " = ?", new String[] { String.valueOf(set.getId()) } );
 	}

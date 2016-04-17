@@ -1,7 +1,7 @@
 package com.gav.sqlmodel;
 
 
-import java.sql.Time;
+import java.util.concurrent.TimeUnit;
 
 public class Set {
 	
@@ -9,9 +9,10 @@ public class Set {
 	private String create_time;
 	private int noReps;
 	private double weight;
-	private double distance;
-	private Time timespent;
+	private float distance;
+	private long timespent;
 	private String type;
+	private long steps;
 	
 	public Set(){}
 	
@@ -30,19 +31,21 @@ public class Set {
 		this.type = "Weight";
 	}
 
-	public Set(int id, String create_time, double distance, Time timespent) {
+	public Set(int id, String create_time, float distance, long timespent, long steps) {
 		this.id = id;
 		this.create_time = create_time;
 		this.distance = distance;
 		this.timespent = timespent;
 		this.type = "Cardio";
+		this.steps = steps;
 	}
 
-	public Set(String create_time, double distance, Time timespent) {
+	public Set(String create_time, float distance, long timespent, long steps) {
 		this.create_time = create_time;
 		this.distance = distance;
 		this.timespent = timespent;
 		this.type = "Cardio";
+		this.steps = steps;
 	}
 
 	public int getId() {
@@ -77,23 +80,28 @@ public class Set {
 		this.weight = weight;
 	}
 
-	public double getDistance() {
+	public float getDistance() {
 		return distance;
 	}
 
-	public void setDistance(double distance) {
+	public void setDistance(float distance) {
 		this.distance = distance;
 	}
 
-	public String getTimespent() {
-		if (timespent != null)
-			return timespent.toString();
-		else
-			return "00:00:00";
+	public long getTimespent() {
+		return timespent;
 	}
 
-	public void setTimespent(String timespent) {
-		this.timespent = Time.valueOf(timespent);
+	public String getTimespentAsString(){
+		//stole from StackOverflow
+		String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(timespent),
+				TimeUnit.MILLISECONDS.toMinutes(timespent) % TimeUnit.HOURS.toMinutes(1),
+				TimeUnit.MILLISECONDS.toSeconds(timespent) % TimeUnit.MINUTES.toSeconds(1));
+		return hms;
+	}
+
+	public void setTimespent(long timespent) {
+		this.timespent = timespent;
 	}
 
 	public String getType() {
@@ -102,6 +110,14 @@ public class Set {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public long getSteps() {
+		return steps;
+	}
+
+	public void setSteps(long steps) {
+		this.steps = steps;
 	}
 
 	public String toString(){

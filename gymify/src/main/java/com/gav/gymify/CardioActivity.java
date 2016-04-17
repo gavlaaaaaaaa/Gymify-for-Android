@@ -13,6 +13,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.SystemClock;
+import android.text.Html;
+import android.text.format.Time;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,9 +23,11 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gav.sqlhelper.DatabaseHelper;
 import com.gav.sqlmodel.Exercise;
+import com.gav.sqlmodel.Set;
 
 public class CardioActivity extends Activity implements SensorEventListener, View.OnClickListener{
 
@@ -33,6 +37,7 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
     private TextView detectorTV;
     private Chronometer chronometer;
     private TextView circleLayout;
+    private TextView lastSet;
     private long steps = 0;
     private long exerciseTime = 0;
     private AlertDialog.Builder finishDialogBuilder;
@@ -44,6 +49,7 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
     private Exercise next_exercise;
     private DatabaseHelper db;
     private int exercise_id;
+    private Set last_set;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,7 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
         detectorTV = (TextView)findViewById(R.id.detector);
         chronometer = (Chronometer) findViewById(R.id.chronometer);
         circleLayout = (TextView) findViewById(R.id.detector);
+        lastSet = (TextView) findViewById(R.id.lastset);
         findViewById(R.id.startBtn).setOnClickListener(this);
         findViewById(R.id.pauseBtn).setOnClickListener(this);
         findViewById(R.id.finishBtn).setOnClickListener(this);
@@ -72,6 +79,14 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
             next_exercise = null;
         }
         currExercise = db.getExercise(exercise_id);
+
+        last_set = db.getLastSetForExercise(exercise_id);
+        if(last_set != null){
+            lastSet.setText(Html.fromHtml("<u>Last "+currExercise.getName()+"</u><br>Distance: "+last_set.getDistance()+"\t"+"Time: "+last_set.getTimespentAsString()));
+        }
+        else{
+            lastSet.setText("No Previous data for this exercise");
+        }
 
         //set page title to match current exercise name
         this.getActionBar().setTitle(currExercise.getName());
@@ -100,7 +115,13 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //TODO: store results here
+                        Time now = new Time();
+                        now.setToNow();
+                        long millis = SystemClock.elapsedRealtime() - chronometer.getBase();
+                        Set cardioSet = new Set(now.format("%H:%M - %m-%d-%Y"), getDistanceRun(steps),millis,steps);
+                        int setId = (int)db.createSet(cardioSet);
+                        cardioSet.setId(setId);
+                        db.createExerciseSet(exercise_id, setId);
                         dialog.cancel();
                         end();
                     }
@@ -111,6 +132,7 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
+                        chronometer.start();
                     }
                 });
 
@@ -118,8 +140,8 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
 
         growAnimX = ObjectAnimator.ofFloat(circleLayout, "scaleX", 1.1f);
         growAnimY = ObjectAnimator.ofFloat(circleLayout, "scaleY", 1.1f);
-        growAnimX.setDuration(900);
-        growAnimY.setDuration(900);
+        growAnimX.setDuration(600);
+        growAnimY.setDuration(600);
         scaleCircle.play(growAnimX).with(growAnimY);
 
 
@@ -194,6 +216,7 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
                 chronometer.stop();
                 break;
             case R.id.finishBtn:
+                chronometer.stop();
                 finishDialog.show();
         }
     }
@@ -207,5 +230,12 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
+    }
+
+    public float getDistanceRun(long steps){
+        //TODO: Add gender to change average step length
+        //Distance = number of steps x average step length / 100,000
+        float distance = (float)(steps*75)/(float)100000;
+        return distance;
     }
 }
