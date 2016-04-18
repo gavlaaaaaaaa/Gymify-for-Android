@@ -7,4 +7,3 @@
     android:padding="16dp"
     android:textIsSelectable="true"
     tools:context="com.gav.gymify.ExerciseDetailFragment" />
-<!-- From: file:/Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/res/layout/fragment_exercise_detail.xml -->

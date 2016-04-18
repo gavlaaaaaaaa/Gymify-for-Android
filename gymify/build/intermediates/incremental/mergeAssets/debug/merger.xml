@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="1.0.1"><source path="/Users/Gav/AndroidStudioProjects/Gymify/gymify/build/intermediates/exploded-aar/com.android.support/multidex/1.0.1/assets"/></dataSet><dataSet config="main"><source path="/Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/assets"/></dataSet><dataSet config="debug"><source path="/Users/Gav/AndroidStudioProjects/Gymify/gymify/src/debug/assets"/></dataSet></merger>

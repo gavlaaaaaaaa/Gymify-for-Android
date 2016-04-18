@@ -50,6 +50,7 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
     private DatabaseHelper db;
     private int exercise_id;
     private Set last_set;
+    private boolean chronometerStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,8 +207,9 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.startBtn:
+                chronometerStarted = true;
                 chronometer.setBase(SystemClock.elapsedRealtime() + exerciseTime);
                 chronometer.start();
                 break;
@@ -217,13 +219,24 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
                 break;
             case R.id.finishBtn:
                 chronometer.stop();
-                finishDialog.show();
+                if (!chronometerStarted && steps == 0) {
+                    super.onBackPressed();
+                    this.overridePendingTransition(R.anim.slide_in_left, android.R.anim.fade_out);
+                } else {
+                    finishDialog.show();
+                }
         }
     }
 
     @Override
     public void onBackPressed(){
-        finishDialog.show();
+        if(!chronometerStarted && steps == 0){
+            super.onBackPressed();
+            this.overridePendingTransition(R.anim.slide_in_left, android.R.anim.fade_out);
+        }
+        else {
+            finishDialog.show();
+        }
     }
 
     public void end(){

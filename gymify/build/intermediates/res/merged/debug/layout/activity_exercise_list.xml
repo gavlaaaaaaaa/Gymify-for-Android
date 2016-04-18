@@ -8,4 +8,3 @@
     android:layout_marginRight="16dp"
     tools:context="com.gav.gymify.ExerciseListActivity"
     tools:layout="@android:layout/list_content" />
-<!-- From: file:/Users/Gav/AndroidStudioProjects/Gymify/gymify/src/main/res/layout/activity_exercise_list.xml -->
