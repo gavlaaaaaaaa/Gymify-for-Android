@@ -59,7 +59,7 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
 
         detectorTV = (TextView)findViewById(R.id.detector);
         chronometer = (Chronometer) findViewById(R.id.chronometer);
-        circleLayout = (TextView) findViewById(R.id.detector);
+        //circleLayout = (TextView) findViewById(R.id.detector);
         lastSet = (TextView) findViewById(R.id.lastset);
         findViewById(R.id.startBtn).setOnClickListener(this);
         findViewById(R.id.pauseBtn).setOnClickListener(this);
@@ -87,6 +87,12 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
         }
         else{
             lastSet.setText("No Previous data for this exercise");
+        }
+
+        //is it a row activity?
+        if(currExercise.getExerciseArea().equals(Exercise.cgroups[2])){
+            //yeah it isssss... change the text
+            detectorTV.setText("Rows\n0");
         }
 
         //set page title to match current exercise name
@@ -180,7 +186,14 @@ public class CardioActivity extends Activity implements SensorEventListener, Vie
         if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             steps++;
             scaleCircle.start();
-            detectorTV.setText("Steps\n" + steps);
+            //is it a row activity?
+            if(currExercise.getExerciseArea().equals(Exercise.cgroups[2])){
+                //yeah it isssss... change the text
+                detectorTV.setText("Rows\n" + steps);
+            }
+            else {
+                detectorTV.setText("Steps\n" + steps);
+            }
             //scaleCircle.end();
         }
     }
